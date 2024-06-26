@@ -50,7 +50,7 @@ const Home = () => {
                     <p>Your Ultimate Contact Management Solution. </p>
                     <p>Stay connected with the people that <span style={{fontStyle:"italic", color: "white", fontWeight: "bold"}}>truly &nbsp;</span>matter.</p>
                     <h2 style={{color: "white", marginTop: "10px"}}>Create you account <span style={{fontWeight:"bold", color:"white"}}>TODAY.</span></h2>
-                    <button className={HomeCSS['create-button']}style={{backgroundColor: "blue", color: "white", padding: "10px 25px", borderRadius: "5px", border: "none", fontSize: "1rem", marginTop: "4%"}}><a href="./register" style={{textDecoration: "none", color: "white"}}><IoIosCreate style={{marginRight: "10px"}}/>Get Started</a></button>
+                    <button className={HomeCSS['create-button']}style={{backgroundColor: "#5783EB", color: "white", padding: "10px 25px", borderRadius: "5px", border: "none", fontSize: "1rem"}}><a href="./register" style={{textDecoration: "none", color: "white"}}><IoIosCreate style={{marginRight: "10px"}}/>Get Started</a></button>
                 </div>
                 
                 

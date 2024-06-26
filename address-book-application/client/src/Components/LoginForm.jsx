@@ -13,14 +13,16 @@ const LoginForm = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:3001/login', {email, password})
+        axios.post('http://localhost:3001/user/login', {email, password})
         .then(res => {
             if(res.data === "Success"){
                 console.log("successful");
-                navigate('/home');
+                navigate('/addressVault');
             }
             else{
+                console.log(res);
                 console.log("fail");
+                navigate('/home');
             }
         })
         .catch(e => console.log(e));

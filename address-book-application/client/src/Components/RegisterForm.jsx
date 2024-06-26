@@ -32,7 +32,7 @@ const RegisterForm = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:3001/register', {name, email, username, password})
+        axios.post('http://localhost:3001/user/register', {name, email, username, password})
         .then(res => console.log(res))
         .catch(e => console.log(e));
 

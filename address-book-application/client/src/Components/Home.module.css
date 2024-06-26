@@ -35,7 +35,8 @@
     margin-top: 15px;
     color: white
 }
-.create-button{
+.text-container .create-button{
+    margin-top: 5%;
     opacity: 1;
 }
 .create-button:hover{
@@ -126,6 +127,18 @@ nav a:hover{
 }
 .menuButton{
     display: none;
+}
+@media(max-width: 500px){
+    .text-container h1{
+        font-size: 2rem;
+    }
+    .text-container p{
+        font-size: 1.5rem;
+    }
+    .text-container .create-button{
+        margin-top: 10%;
+        margin-bottom: 5%;
+    }
 }
 @media(max-width: 700px) {
     .home-container{

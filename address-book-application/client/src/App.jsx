@@ -6,7 +6,7 @@ import LoginForm from './Components/LoginForm'
 import RegisterForm from './Components/RegisterForm'
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Home from './Components/Home'
-
+import Vault from './Components/Vault';
 
 function App() {
 
@@ -18,6 +18,7 @@ function App() {
             <Route path="/login" element = {<LoginForm />} />
             <Route path="/register" element = {<RegisterForm />} />
             <Route path="/home" element = {<Home />} />
+            <Route path="/addressVault" element = {<Vault />}/>
           </Routes>
         </BrowserRouter>
       </>
