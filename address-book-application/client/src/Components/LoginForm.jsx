@@ -1,22 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LoginFormCSS from './LoginForm.module.css';
 import { FaUser } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import Test from "./Test";
+// import jwtDecode from 'jwt-decode';
 
-const LoginForm = () => {
+
+
+const LoginForm = ({userName, setUserName}) => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const token = localStorage.getItem("jsonwebtoken");
+        if(token){
+            navigate("/addressVault");
+        }
+    });
+
     const handleSubmit = (event) => {
         event.preventDefault();
         axios.post('http://localhost:3001/user/login', {email, password})
         .then(res => {
-            if(res.data === "Success"){
-                console.log("successful");
+            if(res.data["status"] === "success"){
+                console.log("Login Successful");
+                const accessToken = res.data["accessToken"];
+                console.log(accessToken);
+                localStorage.setItem("jsonwebtoken", accessToken);
+
+                setUserName(res.data["name"]);
+                setTokenTimeout(accessToken, handleLogout);
                 navigate('/addressVault');
             }
             else{
@@ -28,6 +45,9 @@ const LoginForm = () => {
         .catch(e => console.log(e));
 
     }
+
+    
+
 
     return (
         <div className={LoginFormCSS['body-class']}>
