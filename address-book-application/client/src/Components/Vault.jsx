@@ -18,13 +18,68 @@ import { MdAddBox } from "react-icons/md";
 import { useEffect } from 'react';
 import Test from './Test';
 import {jwtDecode} from 'jwt-decode';
+import AddressForm from './AddressForm';
 
 
 const Vault = ({userName}) => {
 
     const [showSideBar, setShowSideBar] = useState(false);
     const [addresses, setAddresses] = useState([]);
+    const [isFormVisible, setIsFormVisible] = useState(false);
     const navigate = useNavigate();
+
+
+    useEffect(() => {
+        const token = localStorage.getItem("jsonwebtoken");
+
+        setTokenTimeout(token, handleLogout);
+        
+        axios.get('http://localhost:3001/vault', 
+            {headers: {"Authorization": `Bearer ${token}`}}
+        ).then(response => setAddresses(response.data))
+            .catch(err => console.log(err));
+        }
+        
+    , []);
+
+    const toggleFormVisibility = () => {
+        setIsFormVisible(!isFormVisible);
+    }
+
+    // const handleFormSubmit = async (event) => {
+    //     // Handle form submission and update addresses
+    //     console.log("entered");
+    //     const token = localStorage.getItem("jsonwebtoken");
+    //     event.preventDefault();
+    //     const newAddress = {
+    //         name,
+    //         email,
+    //         phone,
+    //         addressLine1,
+    //         addressLine2,
+    //         city,
+    //         state,
+    //         postalCode,
+    //         country
+    //     }
+        
+    //     const config = {headers: {"Authorization": `Bearer ${token}`}};
+    //     console.log("config", config);
+    //     const prom = await axios.post('http://localhost:3001/vault', newAddress, config).then(response => {
+    //         setAddresses([...addresses, response.data]);
+    //         setIsFormVisible(false);
+    //         setName("");
+    //         setEmail("");
+    //         setPhone("");
+    //         setAddressesLine1("");
+    //         setAddressesLine2("");
+    //         setCity("");
+    //         setState("");
+    //         setPostalCode("")
+    //         setCountry("");
+    //         console.log(response.data);
+    //     }).catch(error => console.log(error));
+    // }
 
     const setTokenTimeout = (token, logoutCallback) => {
         if (!token) return;
@@ -39,19 +94,6 @@ const Vault = ({userName}) => {
             }, expirationTime);
         }
     }
-
-    useEffect(() => {
-        const token = localStorage.getItem("jsonwebtoken");
-
-        setTokenTimeout(token, handleLogout);
-        
-        axios.get('http://localhost:3001/vault', 
-            {headers: {"Authorization": `Bearer ${token}`}}
-        ).then(response => setAddresses(response.data))
-            .catch(err => console.log(err));
-        }
-        
-    , []);
     
 
     function toggleSideBar(){
@@ -94,13 +136,20 @@ const Vault = ({userName}) => {
                             <option value="date">Date</option>
                         </select>
                     </div>
-                    <button className={VaultCSS['create-button']}>
+                    <button className={VaultCSS['create-button']} onClick={toggleFormVisibility}>
                         Create New Address<MdAddBox style={{marginLeft: "5px", marginTop: "4px"}}/>
                     </button>
                 </div>
+                {isFormVisible && (
+                    <AddressForm 
+                    setAddresses={setAddresses} 
+                    setIsFormVisible={setIsFormVisible} 
+                    addresses={addresses} 
+                />
+                )}
                 <div>
-                    {addresses.map(address => (
-                        <div style={{backgroundColor: "white"}} key={address.id}>
+                    {addresses.map((address, idx) => (
+                        <div style={{backgroundColor: "white", margin: "10px"}} key={idx}>
                             <h2>{address.name}</h2>
                             <p>{address.city}</p>
                             <p>{address.state}</p>
@@ -108,9 +157,9 @@ const Vault = ({userName}) => {
                         </div>
                     ))}
                 </div>
-                <div className={VaultCSS['cards-container']}>
-                    {/* Cards will be rendered here */}
-                </div>
+                {/* <div className={VaultCSS['cards-container']}>
+                    
+                </div> */}
             </div>
         </div>
     );
