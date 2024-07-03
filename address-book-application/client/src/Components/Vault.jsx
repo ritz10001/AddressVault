@@ -19,6 +19,7 @@ import { useEffect } from 'react';
 import Test from './Test';
 import {jwtDecode} from 'jwt-decode';
 import AddressForm from './AddressForm';
+import AddressModal from './AddressModal';
 
 
 const Vault = ({userName}) => {
@@ -26,6 +27,7 @@ const Vault = ({userName}) => {
     const [showSideBar, setShowSideBar] = useState(false);
     const [addresses, setAddresses] = useState([]);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [selectedAddress, setSelectedAddress] = useState(null);
     const navigate = useNavigate();
 
 
@@ -45,41 +47,6 @@ const Vault = ({userName}) => {
     const toggleFormVisibility = () => {
         setIsFormVisible(!isFormVisible);
     }
-
-    // const handleFormSubmit = async (event) => {
-    //     // Handle form submission and update addresses
-    //     console.log("entered");
-    //     const token = localStorage.getItem("jsonwebtoken");
-    //     event.preventDefault();
-    //     const newAddress = {
-    //         name,
-    //         email,
-    //         phone,
-    //         addressLine1,
-    //         addressLine2,
-    //         city,
-    //         state,
-    //         postalCode,
-    //         country
-    //     }
-        
-    //     const config = {headers: {"Authorization": `Bearer ${token}`}};
-    //     console.log("config", config);
-    //     const prom = await axios.post('http://localhost:3001/vault', newAddress, config).then(response => {
-    //         setAddresses([...addresses, response.data]);
-    //         setIsFormVisible(false);
-    //         setName("");
-    //         setEmail("");
-    //         setPhone("");
-    //         setAddressesLine1("");
-    //         setAddressesLine2("");
-    //         setCity("");
-    //         setState("");
-    //         setPostalCode("")
-    //         setCountry("");
-    //         console.log(response.data);
-    //     }).catch(error => console.log(error));
-    // }
 
     const setTokenTimeout = (token, logoutCallback) => {
         if (!token) return;
@@ -102,6 +69,11 @@ const Vault = ({userName}) => {
 
     const handleLogout = () => {
         localStorage.removeItem("jsonwebtoken");
+    }
+
+    const handleCardClick = (address) => {
+        setSelectedAddress(address);
+        console.log(address);
     }
 
     return(
@@ -149,7 +121,7 @@ const Vault = ({userName}) => {
                 )}
                 <div>
                     {addresses.map((address, idx) => (
-                        <div style={{backgroundColor: "white", margin: "10px"}} key={idx}>
+                        <div style={{backgroundColor: "white", margin: "10px"}} key={idx} onClick={() => handleCardClick(address)}>
                             <h2>{address.name}</h2>
                             <p>{address.city}</p>
                             <p>{address.state}</p>
@@ -160,6 +132,7 @@ const Vault = ({userName}) => {
                 {/* <div className={VaultCSS['cards-container']}>
                     
                 </div> */}
+                <AddressModal address={selectedAddress} onClose={() => setSelectedAddress(null)} />
             </div>
         </div>
     );
