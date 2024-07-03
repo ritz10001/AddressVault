@@ -1,4 +1,4 @@
-*.css linguist-vendored
+*index.css linguist-vendored
 *.scss linguist-vendored
 *.less linguist-vendored
 *.svg linguist-vendored
