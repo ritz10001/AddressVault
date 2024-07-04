@@ -9,9 +9,11 @@ import { IoLogIn } from "react-icons/io5";
 import { IoIosCreate } from "react-icons/io";
 import { BsInfoCircleFill } from "react-icons/bs";
 import { FaCircleInfo } from "react-icons/fa6";
+import { MdEditDocument } from "react-icons/md";
+import { MdDeleteForever } from "react-icons/md";
 import image from "../assets/connected-removebg-preview.png";
 import { GiMaterialsScience } from "react-icons/gi";
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { FaHome } from "react-icons/fa";
 import { CiLogout } from "react-icons/ci";
 import { MdAddBox } from "react-icons/md";
@@ -28,6 +30,8 @@ const Vault = ({userName}) => {
     const [addresses, setAddresses] = useState([]);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [selectedAddress, setSelectedAddress] = useState(null);
+    const [originalAddresses, setOriginalAddresses] = useState([]);
+    const searchName = useRef("");
     const navigate = useNavigate();
 
 
@@ -38,9 +42,11 @@ const Vault = ({userName}) => {
         
         axios.get('http://localhost:3001/vault', 
             {headers: {"Authorization": `Bearer ${token}`}}
-        ).then(response => setAddresses(response.data))
+        ).then(response => {setAddresses(response.data); setOriginalAddresses(structuredClone(response.data));})
             .catch(err => console.log(err));
+            
         }
+        
         
     , []);
 
@@ -63,7 +69,7 @@ const Vault = ({userName}) => {
     }
     
 
-    function toggleSideBar(){
+    const toggleSideBar = () => {
         setShowSideBar(!showSideBar);
     }
 
@@ -74,6 +80,40 @@ const Vault = ({userName}) => {
     const handleCardClick = (address) => {
         setSelectedAddress(address);
         console.log(address);
+    }
+
+    const sortByName = () => {
+        const sortedAddressesByName = [...addresses].sort((a, b) => a.name.localeCompare(b.name));
+        setAddresses(sortedAddressesByName);
+    }
+    
+
+    const searchOperation = (e) => {
+        const value = e.target.value.toLowerCase();
+        searchName.current = value;
+        if (searchName.current === "") {
+            setAddresses(originalAddresses);
+        }
+        else{
+            const newAddresses = addresses.filter(address => address["name"].toLowerCase().includes(searchName.current));
+            setAddresses(newAddresses);
+        }
+        
+    }
+
+    const editAddress = (address) => {
+        const token = localStorage.getItem("jsonwebtoken");
+        
+    }
+
+    const deleteAddress = (address) => {
+        const token = localStorage.getItem("jsonwebtoken");
+        axios.delete(`http://localhost:3001/vault/${address._id}`, {headers: {"Authorization": `Bearer ${token}`}}).then(
+            response => {
+                const updatedAddresses = addresses.filter(a => a._id !== address._id);
+                setAddresses(updatedAddresses);
+            }
+        ).catch(error => console.log(error));
     }
 
     return(
@@ -89,7 +129,7 @@ const Vault = ({userName}) => {
                 
                 <ul className={VaultCSS['horizontal-bar']}>
                     <li><a className={VaultCSS["product"]} href="./home"><GiMaterialsScience className={VaultCSS['science-logo']} style={{marginRight: "10px", fontSize: "30px", color: "magenta"}}/><span className={VaultCSS['vault-text']}>AddressVault</span></a></li>
-                    <li className={VaultCSS["searchBar-container"]}><div className={VaultCSS["searchBar"]}><input type='text' placeholder='Search Address by Name' ></input></div></li>
+                    <li className={VaultCSS["searchBar-container"]}><div className={VaultCSS["searchBar"]}><input type='text' placeholder='Search Address by Name' onChange={searchOperation}></input></div></li>
                     <li className={VaultCSS['hideOnMobile']}><a href="./home">Home<FaHome style={{marginLeft:"5px", color:"red"}}/></a></li>
                     <li className={VaultCSS['hideOnMobile']}><a href="./userinfo">User<FaUser style={{marginLeft:"5px", color:"yellow"}} /></a></li>
                     <li className={VaultCSS['hideOnMobile']}><a href="./home" onClick={handleLogout}>LogOut<CiLogout style={{marginLeft:"5px", color:"blue"}}/></a></li>
@@ -103,9 +143,16 @@ const Vault = ({userName}) => {
                 <div className={VaultCSS['controls-container']}>
                     <div className={VaultCSS['sort-by']}>
                         <label htmlFor="sort" style={{color: "white", fontWeight: "bold"}}>Sort By: &nbsp;&nbsp;&nbsp;</label>
-                        <select id="sort" name="sort">
-                            <option value="name">Name</option>
+                        <select id="sort" name="sort" onChange={(e) =>{
+                            if(e.target.value === 'name'){
+                                sortByName(addresses);
+                            }
+                            else if(e.target.value === 'date'){
+                                setAddresses(structuredClone(originalAddresses));
+                            }
+                            }}>
                             <option value="date">Date</option>
+                            <option value="name">Name</option>
                         </select>
                     </div>
                     <button className={VaultCSS['create-button']} onClick={toggleFormVisibility}>
@@ -121,11 +168,18 @@ const Vault = ({userName}) => {
                 )}
                 <div>
                     {addresses.map((address, idx) => (
-                        <div style={{backgroundColor: "white", margin: "10px"}} key={idx} onClick={() => handleCardClick(address)}>
-                            <h2>{address.name}</h2>
-                            <p>{address.city}</p>
-                            <p>{address.state}</p>
-                            <p>{address.postalCode}</p>
+                        <div style={{backgroundColor: "white", margin: "10px"}} key={idx}>
+                            <div className={VaultCSS["opContainer"]} style={{display: "flex"}}>
+                                <h2 style={{marginRight:"auto"}} onClick={() => handleCardClick(address)}>{address.name}</h2>
+                                <button onClick = {() => editAddress(address)} style={{border: "2px solid black", borderRadius: "2px", height: "40px", backgroundColor: "limegreen", color: "white", fontWeight: "bold", padding: "0px 10px", fontSize: "15px", display: "flex", alignItems: "center"}}>Edit<MdEditDocument style={{fontSize: "20px"}}/></button>
+                                <button onClick = {() => deleteAddress(address)} style={{border: "2px solid black", borderRadius: "2px", height: "40px", backgroundColor: "red", color: "white", fontWeight: "bold", padding: "0px 10px", fontSize: "15px", display: "flex", alignItems: "center" }}>Delete<MdDeleteForever style={{fontSize: "20px"}}/></button>
+                            </div>
+                            <div className="info" onClick = {() => handleCardClick(address)}>
+                                <p>{address.city}</p>
+                                <p>{address.state}</p>
+                                <p>{address.postalCode}</p>
+                            </div>
+                            
                         </div>
                     ))}
                 </div>

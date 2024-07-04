@@ -17,24 +17,4 @@ app.use("/vault", vaultRoutes);
 app.use("/user", userRoutes);
 app.use(errorHandler);
 
-
-// app.post('/login', (req, res) => {
-//     const {name, email, username, password} = req.body;
-//     User.findOne({email})
-//     .then(user => {
-//         if(user && user.password === password){ 
-//             res.json("Success");
-//         }       
-//         else{
-//             res.json("Incorrect or user doesnt exist");
-//         }
-//     });
-// });
-
-// app.post('/register', (req, res) => {
-//     User.create(req.body)
-//     .then(user => res.json(user))
-//     .catch(e => res.json(e));
-// });
-
 app.listen(process.env.PORT, () => console.log("server is running"));

@@ -7,6 +7,12 @@
     background-size: cover;
     /* overflow-y:  */
 }
+.opContainer h2:hover {
+    cursor: pointer;
+}
+.opContainer button:hover{
+    cursor: pointer;
+}
 
 nav ul{
     width: 100%;
