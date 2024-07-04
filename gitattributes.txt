@@ -1,9 +1,0 @@
-*index.css linguist-vendored
-*.scss linguist-vendored
-*.less linguist-vendored
-*.svg linguist-vendored
-*.png linguist-vendored
-*.jpg linguist-vendored
-*.gif linguist-vendored
-node_modules/* linguist-vendored
-public/* linguist-vendored
