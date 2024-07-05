@@ -12,6 +12,7 @@ const RegisterForm = () => {
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     function handleNameChange(event){
         setName(event.target.value);
@@ -33,7 +34,7 @@ const RegisterForm = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         axios.post('http://localhost:3001/user/register', {name, email, username, password})
-        .then(res => console.log(res))
+        .then(res => navigate('/home'))
         .catch(e => console.log(e));
 
     }

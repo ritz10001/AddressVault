@@ -8,6 +8,7 @@ const userRoutes = require("./routes/userRoutes");
 const vaultRoutes = require("./routes/vaultRoutes");
 const dotenv = require("dotenv").config();
 const errorHandler = require("./middleware/errorHandler");
+
 app.use(express.json());
 app.use(cors());
 

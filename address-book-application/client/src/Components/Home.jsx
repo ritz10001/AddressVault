@@ -30,8 +30,8 @@ const Home = () => {
                 {showSideBar &&
                 <ul className={HomeCSS['sidebar']}>
                     <li onClick={toggleSideBar}><a href="#"><RxCross1 style={{marginLeft: "auto", backgroundColor: "blue"}}/></a></li>
-                    <li><a href="#">Login<IoLogIn style={{marginLeft: "5px", color: "blue"}}/></a></li>
-                    <li><a href="#">Register<IoIosCreate style={{marginLeft: "5px", color: "red"}}/></a></li>
+                    <li><a href="./login">Login<IoLogIn style={{marginLeft: "5px", color: "blue"}}/></a></li>
+                    <li><a href="./register">Register<IoIosCreate style={{marginLeft: "5px", color: "red"}}/></a></li>
                     <li><a href="#">About<FaCircleInfo style={{marginLeft: "5px", color: "gold"}}/></a></li>
                 </ul>
             }

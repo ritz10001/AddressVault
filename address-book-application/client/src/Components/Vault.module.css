@@ -5,7 +5,6 @@
     background: radial-gradient(ellipse at bottom, #0e1824 0%, #000000 100%);
     background-repeat: no-repeat;
     background-size: cover;
-    /* overflow-y:  */
 }
 .cards-container{
     border: 2px solid cyan;

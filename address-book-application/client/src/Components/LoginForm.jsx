@@ -5,9 +5,6 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import Test from "./Test";
-// import jwtDecode from 'jwt-decode';
-
-
 
 const LoginForm = ({userName, setUserName}) => {
 
@@ -46,9 +43,6 @@ const LoginForm = ({userName, setUserName}) => {
 
     }
 
-    
-
-
     return (
         <div className={LoginFormCSS['body-class']}>
             <div className={LoginFormCSS['wrapper']}>
@@ -70,7 +64,6 @@ const LoginForm = ({userName, setUserName}) => {
                 </form>
             </div>
         </div>
-
     );
 }
 

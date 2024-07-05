@@ -24,9 +24,7 @@ import AddressForm from './AddressForm';
 import AddressModal from './AddressModal';
 import UserInfo from './UserInfo';
 
-
-
-const Vault = ({userName, setUserName}) => {
+const Vault = () => {
 
     const [showSideBar, setShowSideBar] = useState(false);
     const [addresses, setAddresses] = useState([]);
@@ -34,14 +32,11 @@ const Vault = ({userName, setUserName}) => {
     const [selectedAddress, setSelectedAddress] = useState(null);
     const [originalAddresses, setOriginalAddresses] = useState([]);
     const [addressToEdit, setAddressToEdit] = useState(null);
-    const [persistUName, setPersistUName] = useState(userName);
     const [isUserVisible, setIsUserVisible] = useState(false);
     const searchName = useRef("");
-    const navigate = useNavigate();
-
+    const [uName, setUName] = useState(null);
 
     useEffect(() => {
-        // setPersistUName(userName);
         const token = localStorage.getItem("jsonwebtoken");
 
         setTokenTimeout(token, handleLogout);
@@ -50,17 +45,18 @@ const Vault = ({userName, setUserName}) => {
             {headers: {"Authorization": `Bearer ${token}`}}
         ).then(response => {setAddresses(response.data); setOriginalAddresses(structuredClone(response.data));})
             .catch(err => console.log(err));
-            
-        }
-        
-        
-    , []);
 
+        axios.get('http://localhost:3001/user/current', 
+            {headers: {"Authorization": `Bearer ${token}`}}
+        ).then(response => {setUName(response.data["name"])}
+        ).catch(error => console.log(error));
+    }, []);
+    
     const setTokenTimeout = (token, logoutCallback) => {
         if (!token) return;
-
         const decodedToken = jwtDecode(token);
         const expirationTime = decodedToken.exp * 1000 - Date.now();
+
         console.log(expirationTime/1000);
 
         if(expirationTime > 0){
@@ -70,8 +66,8 @@ const Vault = ({userName, setUserName}) => {
         }
     }
     
-
     const toggleSideBar = () => {
+        console.log("togggled");
         setShowSideBar(!showSideBar);
     }
 
@@ -81,7 +77,6 @@ const Vault = ({userName, setUserName}) => {
 
     const handleCardClick = (address) => {
         setSelectedAddress(address);
-        console.log(address);
     }
 
     const sortByName = () => {
@@ -89,7 +84,6 @@ const Vault = ({userName, setUserName}) => {
         setAddresses(sortedAddressesByName);
     }
     
-
     const searchOperation = (e) => {
         const value = e.target.value.toLowerCase();
         searchName.current = value;
@@ -107,12 +101,8 @@ const Vault = ({userName, setUserName}) => {
     }
 
     const editAddress = (address) => {
-        console.log("address", address);
         setAddressToEdit(address);
-        console.log("hello");
-        console.log(addressToEdit);
         setIsFormVisible(true);
-
     }
 
     const deleteAddress = (address) => {
@@ -141,7 +131,11 @@ const Vault = ({userName, setUserName}) => {
     const handleUserClose = () => {
         setIsUserVisible(false);
     }
+    const doubleFunction = () => {
+        toggleSideBar();
+        toggleUserVisibility();
 
+    }
     return(
         <div className={VaultCSS['body-container-2']}>
             <nav className={VaultCSS['nav-1']}>
@@ -149,10 +143,9 @@ const Vault = ({userName, setUserName}) => {
                 <ul className={VaultCSS['side-bar']}>
                     <li><a href="#" aria-label='Close' onClick={toggleSideBar}><RxCross1 style={{marginLeft: "auto"}}/></a></li>
                     <li><a href="./home">Home<FaHome style={{marginLeft:"10px", color:"red"}}/></a></li>
-                    <li><a href="./userinfo">User Information<FaUser style={{marginLeft:"10px", color:"yellow"}} /></a></li>
-                    <li><a href="./home">Log out<CiLogout style={{marginLeft:"10px", color:"blue"}}/></a></li>
+                    <li><a onClick={doubleFunction}>User Information<FaUser style={{marginLeft:"10px", color:"yellow"}} /></a></li>
+                    <li><a href="./home" onClick={handleLogout}>Log out<CiLogout style={{marginLeft:"10px", color:"blue"}}/></a></li>
                 </ul>}
-                
                 <ul className={VaultCSS['horizontal-bar']}>
                     <li><a className={VaultCSS["product"]} href="./home"><GiMaterialsScience className={VaultCSS['science-logo']} style={{marginRight: "10px", fontSize: "30px", color: "magenta"}}/><span className={VaultCSS['vault-text']}>AddressVault</span></a></li>
                     <li className={VaultCSS["searchBar-container"]}><div className={VaultCSS["searchBar"]}><input type='text' placeholder='Search by name, state, location, country etc' onChange={searchOperation}></input></div></li>
@@ -161,10 +154,10 @@ const Vault = ({userName, setUserName}) => {
                     <li className={VaultCSS['hideOnMobile']}><a href="./home" onClick={handleLogout}>LogOut<CiLogout style={{marginLeft:"5px", color:"blue"}}/></a></li>
                     <li className={VaultCSS["menu-button"]} onClick={toggleSideBar} ><a href="#"><RxHamburgerMenu /></a></li>
                 </ul>
-                
             </nav>
-            <h2 style={{color:"white"}}>Welcome, {persistUName}</h2>
-            
+
+            {uName && (<h2 style={{color:"white", textAlign: "center", paddingTop: "20px"}}>Welcome, {uName}</h2>)}
+
             <div className={VaultCSS["home-container-2"]}>
                 <div className={VaultCSS['controls-container']}>
                     <div className={VaultCSS['sort-by']}>
@@ -207,7 +200,6 @@ const Vault = ({userName, setUserName}) => {
                                 <p style={{color: "white"}}>{address.state}</p>
                                 <p style={{color: "white"}}>{address.postalCode}</p>
                             </div>
-                            
                         </div>
                     ))}
                 </div>

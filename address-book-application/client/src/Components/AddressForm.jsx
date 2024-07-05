@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import AddressFormCSS from './AddressForm.module.css'; 
 import axios from 'axios';
 
-
 const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit, onClose }) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
