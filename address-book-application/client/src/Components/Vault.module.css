@@ -7,6 +7,14 @@
     background-size: cover;
     /* overflow-y:  */
 }
+.cards-container{
+    border: 2px solid cyan;
+    background-color: hsla(0, 0%, 66%, 0.208);
+    border-radius: 5px;
+}
+.opContainer button{
+    border-radius: 5px;
+}
 .opContainer h2:hover {
     cursor: pointer;
 }

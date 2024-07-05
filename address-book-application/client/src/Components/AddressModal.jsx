@@ -16,7 +16,7 @@ const AddressModal = ({address, onClose}) => {
                 <p>Email: {address.email}</p>
                 <p>Phone: {address.phone}</p>
                 <p>Address Line 1: {address.addressLine1}</p>
-                <p>Address Line 2: {address.addressLine2}</p>
+                <p>Address Line 2: {address.addressLine2 ? address.addressLine2 : "N/A"}</p>
                 <p>City: {address.city}</p>
                 <p>State: {address.state}</p>
                 <p>Postal Code: {address.postalCode}</p>

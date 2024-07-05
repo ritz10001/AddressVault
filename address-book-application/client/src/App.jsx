@@ -25,7 +25,7 @@ function App() {
             <Route path="/home" element = {<Home />} />
             <Route path="/addressVault" element = {
               <ProtectedRoute>
-                <Vault userName={userName}/>
+                <Vault userName={userName} setUserName={setUserName}/>
               </ProtectedRoute>
             }/>
           </Routes>

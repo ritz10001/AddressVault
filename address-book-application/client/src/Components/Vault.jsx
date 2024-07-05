@@ -22,20 +22,26 @@ import Test from './Test';
 import {jwtDecode} from 'jwt-decode';
 import AddressForm from './AddressForm';
 import AddressModal from './AddressModal';
+import UserInfo from './UserInfo';
 
 
-const Vault = ({userName}) => {
+
+const Vault = ({userName, setUserName}) => {
 
     const [showSideBar, setShowSideBar] = useState(false);
     const [addresses, setAddresses] = useState([]);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [selectedAddress, setSelectedAddress] = useState(null);
     const [originalAddresses, setOriginalAddresses] = useState([]);
+    const [addressToEdit, setAddressToEdit] = useState(null);
+    const [persistUName, setPersistUName] = useState(userName);
+    const [isUserVisible, setIsUserVisible] = useState(false);
     const searchName = useRef("");
     const navigate = useNavigate();
 
 
     useEffect(() => {
+        // setPersistUName(userName);
         const token = localStorage.getItem("jsonwebtoken");
 
         setTokenTimeout(token, handleLogout);
@@ -49,10 +55,6 @@ const Vault = ({userName}) => {
         
         
     , []);
-
-    const toggleFormVisibility = () => {
-        setIsFormVisible(!isFormVisible);
-    }
 
     const setTokenTimeout = (token, logoutCallback) => {
         if (!token) return;
@@ -95,15 +97,22 @@ const Vault = ({userName}) => {
             setAddresses(originalAddresses);
         }
         else{
-            const newAddresses = addresses.filter(address => address["name"].toLowerCase().includes(searchName.current));
+            const newAddresses = addresses.filter(address => (address["name"].toLowerCase().includes(searchName.current) 
+            || address["state"].toLowerCase().includes(searchName.current)) || address["city"].toLowerCase().includes(searchName.current)
+            || address["addressLine1"].toLowerCase().includes(searchName.current) || address["postalCode"].toLowerCase().includes(searchName.current)
+            || address["country"].toLowerCase().includes(searchName.current));
             setAddresses(newAddresses);
         }
         
     }
 
     const editAddress = (address) => {
-        const token = localStorage.getItem("jsonwebtoken");
-        
+        console.log("address", address);
+        setAddressToEdit(address);
+        console.log("hello");
+        console.log(addressToEdit);
+        setIsFormVisible(true);
+
     }
 
     const deleteAddress = (address) => {
@@ -114,6 +123,23 @@ const Vault = ({userName}) => {
                 setAddresses(updatedAddresses);
             }
         ).catch(error => console.log(error));
+    }
+
+    const toggleFormVisibility = () => {
+        setIsFormVisible(!isFormVisible);
+    }
+
+    const handleFormClose = () => {
+        setAddressToEdit(null);
+        setIsFormVisible(false);
+    };
+
+    const toggleUserVisibility = () => {
+        setIsUserVisible(!isUserVisible);
+    }
+
+    const handleUserClose = () => {
+        setIsUserVisible(false);
     }
 
     return(
@@ -129,15 +155,15 @@ const Vault = ({userName}) => {
                 
                 <ul className={VaultCSS['horizontal-bar']}>
                     <li><a className={VaultCSS["product"]} href="./home"><GiMaterialsScience className={VaultCSS['science-logo']} style={{marginRight: "10px", fontSize: "30px", color: "magenta"}}/><span className={VaultCSS['vault-text']}>AddressVault</span></a></li>
-                    <li className={VaultCSS["searchBar-container"]}><div className={VaultCSS["searchBar"]}><input type='text' placeholder='Search Address by Name' onChange={searchOperation}></input></div></li>
+                    <li className={VaultCSS["searchBar-container"]}><div className={VaultCSS["searchBar"]}><input type='text' placeholder='Search by name, state, location, country etc' onChange={searchOperation}></input></div></li>
                     <li className={VaultCSS['hideOnMobile']}><a href="./home">Home<FaHome style={{marginLeft:"5px", color:"red"}}/></a></li>
-                    <li className={VaultCSS['hideOnMobile']}><a href="./userinfo">User<FaUser style={{marginLeft:"5px", color:"yellow"}} /></a></li>
+                    <li className={VaultCSS['hideOnMobile']}><a onClick={toggleUserVisibility}>User<FaUser style={{marginLeft:"5px", color:"yellow"}} /></a></li>
                     <li className={VaultCSS['hideOnMobile']}><a href="./home" onClick={handleLogout}>LogOut<CiLogout style={{marginLeft:"5px", color:"blue"}}/></a></li>
                     <li className={VaultCSS["menu-button"]} onClick={toggleSideBar} ><a href="#"><RxHamburgerMenu /></a></li>
                 </ul>
                 
             </nav>
-            <h2 style={{color:"white"}}>Welcome, {userName}</h2>
+            <h2 style={{color:"white"}}>Welcome, {persistUName}</h2>
             
             <div className={VaultCSS["home-container-2"]}>
                 <div className={VaultCSS['controls-container']}>
@@ -164,29 +190,29 @@ const Vault = ({userName}) => {
                     setAddresses={setAddresses} 
                     setIsFormVisible={setIsFormVisible} 
                     addresses={addresses} 
+                    addressToEdit = {addressToEdit}
+                    onClose = {handleFormClose}
                 />
                 )}
                 <div>
                     {addresses.map((address, idx) => (
-                        <div style={{backgroundColor: "white", margin: "10px"}} key={idx}>
+                        <div className={VaultCSS["cards-container"]} style={{ margin: "10px"}} key={idx}>
                             <div className={VaultCSS["opContainer"]} style={{display: "flex"}}>
-                                <h2 style={{marginRight:"auto"}} onClick={() => handleCardClick(address)}>{address.name}</h2>
-                                <button onClick = {() => editAddress(address)} style={{border: "2px solid black", borderRadius: "2px", height: "40px", backgroundColor: "limegreen", color: "white", fontWeight: "bold", padding: "0px 10px", fontSize: "15px", display: "flex", alignItems: "center"}}>Edit<MdEditDocument style={{fontSize: "20px"}}/></button>
-                                <button onClick = {() => deleteAddress(address)} style={{border: "2px solid black", borderRadius: "2px", height: "40px", backgroundColor: "red", color: "white", fontWeight: "bold", padding: "0px 10px", fontSize: "15px", display: "flex", alignItems: "center" }}>Delete<MdDeleteForever style={{fontSize: "20px"}}/></button>
+                                <h2 style={{marginRight:"auto", color: "red"}} onClick={() => handleCardClick(address)}>{address.name}</h2>
+                                <button onClick = {() => editAddress(address)} style={{border: "2px solid black", borderRadius: "5px", height: "40px", backgroundColor: "limegreen", color: "white", fontWeight: "bold", padding: "0px 10px", fontSize: "15px", display: "flex", alignItems: "center"}}>Edit<MdEditDocument style={{fontSize: "20px"}}/></button>
+                                <button onClick = {() => deleteAddress(address)} style={{border: "2px solid black", borderRadius: "5px", height: "40px", backgroundColor: "red", color: "white", fontWeight: "bold", padding: "0px 10px", fontSize: "15px", display: "flex", alignItems: "center" }}>Delete<MdDeleteForever style={{fontSize: "20px"}}/></button>
                             </div>
                             <div className="info" onClick = {() => handleCardClick(address)}>
-                                <p>{address.city}</p>
-                                <p>{address.state}</p>
-                                <p>{address.postalCode}</p>
+                                <p style={{color: "white"}}>{address.city}</p>
+                                <p style={{color: "white"}}>{address.state}</p>
+                                <p style={{color: "white"}}>{address.postalCode}</p>
                             </div>
                             
                         </div>
                     ))}
                 </div>
-                {/* <div className={VaultCSS['cards-container']}>
-                    
-                </div> */}
                 <AddressModal address={selectedAddress} onClose={() => setSelectedAddress(null)} />
+                {isUserVisible && (<UserInfo onClose={handleUserClose} />)}
             </div>
         </div>
     );
