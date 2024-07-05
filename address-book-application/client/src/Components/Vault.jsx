@@ -23,6 +23,7 @@ import {jwtDecode} from 'jwt-decode';
 import AddressForm from './AddressForm';
 import AddressModal from './AddressModal';
 import UserInfo from './UserInfo';
+import ExpiredTokenAlert from './ExpiredTokenAlert';
 
 const Vault = () => {
 
@@ -33,8 +34,10 @@ const Vault = () => {
     const [originalAddresses, setOriginalAddresses] = useState([]);
     const [addressToEdit, setAddressToEdit] = useState(null);
     const [isUserVisible, setIsUserVisible] = useState(false);
+    const [isTokenExpired, setIsTokenExpired] = useState(false);
     const searchName = useRef("");
     const [uName, setUName] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem("jsonwebtoken");
@@ -49,7 +52,7 @@ const Vault = () => {
         axios.get('http://localhost:3001/user/current', 
             {headers: {"Authorization": `Bearer ${token}`}}
         ).then(response => {setUName(response.data["name"])}
-        ).catch(error => console.log(error));
+        ).catch(error => navigate('/login'));
     }, []);
     
     const setTokenTimeout = (token, logoutCallback) => {
@@ -72,8 +75,13 @@ const Vault = () => {
     }
 
     const handleLogout = () => {
+        setIsTokenExpired(true);
         localStorage.removeItem("jsonwebtoken");
     }
+
+    const handleAlertClose = () => {
+        setIsTokenExpired(false);
+    };
 
     const handleCardClick = (address) => {
         setSelectedAddress(address);
@@ -205,6 +213,7 @@ const Vault = () => {
                 </div>
                 <AddressModal address={selectedAddress} onClose={() => setSelectedAddress(null)} />
                 {isUserVisible && (<UserInfo onClose={handleUserClose} />)}
+                {isTokenExpired && <ExpiredTokenAlert onClose={handleAlertClose} />}
             </div>
         </div>
     );
