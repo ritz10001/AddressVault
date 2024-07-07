@@ -35,6 +35,7 @@ const Vault = () => {
     const [addressToEdit, setAddressToEdit] = useState(null);
     const [isUserVisible, setIsUserVisible] = useState(false);
     const [isTokenExpired, setIsTokenExpired] = useState(false);
+    const [logoutPress, setLogoutPress] = useState(false);
     const searchName = useRef("");
     const [uName, setUName] = useState(null);
     const navigate = useNavigate();
@@ -159,7 +160,7 @@ const Vault = () => {
                     <li className={VaultCSS["searchBar-container"]}><div className={VaultCSS["searchBar"]}><input type='text' placeholder='Search by name, state, location, country etc' onChange={searchOperation}></input></div></li>
                     <li className={VaultCSS['hideOnMobile']}><a href="./home">Home<FaHome style={{marginLeft:"5px", color:"red"}}/></a></li>
                     <li className={VaultCSS['hideOnMobile']}><a onClick={toggleUserVisibility}>User<FaUser style={{marginLeft:"5px", color:"yellow"}} /></a></li>
-                    <li className={VaultCSS['hideOnMobile']}><a href="./home" onClick={handleLogout}>LogOut<CiLogout style={{marginLeft:"5px", color:"blue"}}/></a></li>
+                    <li className={VaultCSS['hideOnMobile']}><a href="./home" onClick={() => {handleLogout(); setLogoutPress(true)}}>LogOut<CiLogout style={{marginLeft:"5px", color:"blue"}}/></a></li>
                     <li className={VaultCSS["menu-button"]} onClick={toggleSideBar} ><a href="#"><RxHamburgerMenu /></a></li>
                 </ul>
             </nav>
@@ -213,7 +214,7 @@ const Vault = () => {
                 </div>
                 <AddressModal address={selectedAddress} onClose={() => setSelectedAddress(null)} />
                 {isUserVisible && (<UserInfo onClose={handleUserClose} />)}
-                {isTokenExpired && <ExpiredTokenAlert onClose={handleAlertClose} />}
+                {isTokenExpired && !logoutPress && <ExpiredTokenAlert onClose={handleAlertClose} />}
             </div>
         </div>
     );
