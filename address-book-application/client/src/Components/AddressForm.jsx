@@ -20,6 +20,7 @@ const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit,
     const [isCountrySelected, setIsCountrySelected] = useState(false);
     const [isStateSelected, setIsStateSelected] = useState(false);
     const [isCitySelected, setIsCitySelected] = useState(false);
+    const [countryCode, setCountryCode] = useState("");
 	const autocompleteRef = useRef();
 
     useEffect(() => {
@@ -92,6 +93,8 @@ const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit,
 
     const handleCountryChange = (selectedOption) => {
         setCountry(selectedOption.name);
+        setCountryCode(selectedOption.code3.toLowerCase());
+        console.log(selectedOption.code3.toLowerCase());
         setStates(selectedOption.states.map(state => ({label: state.name, value: state.name})));
         setState("");
         setIsCountrySelected(true);
@@ -104,55 +107,31 @@ const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit,
         setIsStateSelected(true);
     }
 
-    const handleCityChange = () => {
-
-    }
     const handlePlaceSelected = (place) => {
-        const p = autocompleteRef.current.getPlace();
-        console.log(p);
-        console.log("he;;p");
+
         const addressComponents = place.address_components;
         const address = {
-            line1: "",
-            line2: "",
             city: "",
             state: "",
-            country: "",
             postalCode: ""
         }
 
         addressComponents.forEach(component => {
             const types = component.types;
-            if (types.includes("street_number")) {
-                address.line1 = component.long_name + " " + address.line1;
-            }
-            if (types.includes("route")) {
-                address.line1 += component.long_name;
-            }
-            if (types.includes("sublocality_level_1") || types.includes("locality")) {
+            if (types.includes("locality")) {
                 address.city = component.long_name;
             }
             if (types.includes("administrative_area_level_1")) {
                 address.state = component.long_name;
             }
-            if (types.includes("country")) {
-                address.country = component.long_name;
-            }
             if (types.includes("postal_code")) {
                 address.postalCode = component.long_name;
             } 
         });
-
-        setAddressLine1(address.line1);
+        setAddressLine1(place.formatted_address);
         setCity(address.city);
-        setState(address.state);
-        setCountry(address.country);
         setPostalCode(address.postalCode);
-        console.log(address.line1);
-        console.log(address.city);
-        console.log(address.state);
-        console.log(address.country);
-        console.log(address.postalCode);
+        setState(address.state);
     }
 
     return (
@@ -175,32 +154,32 @@ const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit,
                 onChange={handleStateChange} />
                 <h4 style={{color: "white"}}>{country}</h4>
 
+                <ReactGoogleAutocomplete 
+                placeholder="Address Line 1"
+                apiKey="AIzaSyDdAVva_hPAJtlP2Xutm2kGi1z3etA7Jsk" 
+                onPlaceSelected={handlePlaceSelected}
+                options={{
+                    types: ['address'],
+                    componentRestrictions: { country: countryCode },
+                }}
+                defaultValue={addressLine1}
+                onChange={e => setAddressLine1(e.target.value)} />
+
                 <ReactGoogleAutocomplete
                     placeholder="City"
                     apiKey="AIzaSyDdAVva_hPAJtlP2Xutm2kGi1z3etA7Jsk"
-                    onPlaceSelected={handlePlaceSelected}
+                    onPlaceSelected={place => {setCity(place.address_components[0].long_name)}}
                     options={{
                         types: ['(cities)'],
-                        componentRestrictions: { country: "ind"},
+                        componentRestrictions: { country: countryCode },
                     }}
                     disabled={!isStateSelected}
                     defaultValue={city}
                     onChange={e => {setCity(e.target.value); console.log(country)}}
                 />
 
-                <ReactGoogleAutocomplete apiKey="AIzaSyDdAVva_hPAJtlP2Xutm2kGi1z3etA7Jsk" 
-                placeholder="Address Line 1"
-                onPlaceSelected={handlePlaceSelected}
-                options={{
-                    types: ['address'],
-                    componentRestrictions: { country: country, administrativeArea: state },
-                }}
-                defaultValue={addressLine1}
-                onChange={e => setAddressLine1(e.target.value)} />
 
                 <input type="text" placeholder="Address Line 2" value={addressLine2} onChange={e => setAddressLine2(e.target.value)}/>
-
-                {/* <input type="text" placeholder="Country" required value={country} onChange={e => setCountry(e.target.value)}/> */}
                 
 
                 <input type="text" 
