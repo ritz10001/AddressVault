@@ -1,6 +1,5 @@
 import React from 'react';
 import AddressModalCSS from './AddressModal.module.css';
-import axios from 'axios';
 import { RxCross1 } from "react-icons/rx";
 import Map from './Map';
 

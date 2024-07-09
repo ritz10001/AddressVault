@@ -78,6 +78,13 @@
 .register-link a:hover{
     color: red;
 }
+.sign-in-button{
+    opacity: 1;
+}
+.sign-in-button:hover{
+    opacity: 0.8;
+    transition: 0.3s;
+}
 
 /* FOR VERTICAL ORIENTATIONS : PHONES AND TABLETS */
 

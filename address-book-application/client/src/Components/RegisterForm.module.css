@@ -6,7 +6,6 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    /* background: linear-gradient(hsl(193, 100%, 50%), hsl(179, 100%, 50%)); */
     background: radial-gradient(ellipse at bottom, #0e1824 0%, #000000 100%);
 }
 
@@ -94,6 +93,13 @@
 
 .register-link a:hover{
     color: red;
+}
+.button{
+    opacity: 1;
+}
+.button:hover{
+    opacity: 0.8;
+    transition: 0.3s;
 }
 
 /* FOR PHONES AND VERTICAL ORIENTATIONS*/

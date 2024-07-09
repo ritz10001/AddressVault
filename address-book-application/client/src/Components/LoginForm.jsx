@@ -10,6 +10,7 @@ const LoginForm = ({userName, setUserName}) => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isLoginFail, setIsLoginFail] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -24,22 +25,18 @@ const LoginForm = ({userName, setUserName}) => {
         axios.post('http://localhost:3001/user/login', {email, password})
         .then(res => {
             if(res.data["status"] === "success"){
-                console.log("Login Successful");
+                setIsLoginFail(false);
                 const accessToken = res.data["accessToken"];
-                console.log(accessToken);
                 localStorage.setItem("jsonwebtoken", accessToken);
-
                 setUserName(res.data["name"]);
                 setTokenTimeout(accessToken, handleLogout);
                 navigate('/addressVault');
             }
             else{
-                console.log(res);
-                console.log("fail");
                 navigate('/home');
             }
         })
-        .catch(e => console.log(e));
+        .catch(e => setIsLoginFail(true));
 
     }
 
@@ -58,9 +55,15 @@ const LoginForm = ({userName, setUserName}) => {
                         <input type="password" placeholder="Password" required onChange={e => setPassword(e.target.value)}/>
                         <div className={LoginFormCSS['icon-class']}><RiLockPasswordFill className={LoginFormCSS['icon']}/></div>
                     </div>
-                    <button type="submit">Sign In</button>
+                    <button className={LoginFormCSS['sign-in-button']} type="submit">Sign In</button>
+                    {isLoginFail &&
+                        <div className={LoginFormCSS["fail"]} style={{marginTop: "10px", fontSize: "0.9rem"}}>
+                            Incorrect Email or Password. Please try again.
+                        </div>
+                    }
                     <div className={LoginFormCSS['register-link']}><p>Don't have an account? <a href="./register">Sign up</a></p></div>
                     </div>
+                    
                 </form>
             </div>
         </div>

@@ -5,6 +5,7 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import {useState} from 'react';
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
+import AccountCreated from "./AccountCreated";
 
 const RegisterForm = () => {
 
@@ -12,6 +13,7 @@ const RegisterForm = () => {
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [isAccountRegistered, setIsAccountRegistered] = useState(false);
     const navigate = useNavigate();
 
     function handleNameChange(event){
@@ -30,11 +32,15 @@ const RegisterForm = () => {
         setPassword(event.target.value);
     }
 
+    const handleAccountClose = () => {
+        setIsAccountRegistered(true);
+    }
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
         axios.post('http://localhost:3001/user/register', {name, email, username, password})
-        .then(res => navigate('/home'))
+        .then(res => handleAccountClose())
         .catch(e => console.log(e));
 
     }
@@ -46,25 +52,29 @@ const RegisterForm = () => {
                     <div className={RegisterFormCSS['info']}>
                         <div className={RegisterFormCSS['input-box']}>
                             <input type="text" placeholder="Full Name" required onChange={handleNameChange}/>
-                            <div className={RegisterFormCSS['icon-class']}><FaUser className={RegisterFormCSS['icon']}/></div>
+                            <div className={RegisterFormCSS['icon-class']}><FaUser className={RegisterFormCSS['icon']} style={{color: "red"}}/></div>
                         </div>
                         <div className={RegisterFormCSS['input-box']}>
                             <input type="text" placeholder="Email Address" required onChange={handleEmailChange}/>
-                            <div className={RegisterFormCSS['icon-class']}><FaUser className={RegisterFormCSS['icon']}/></div>
+                            <div className={RegisterFormCSS['icon-class']}><FaUser className={RegisterFormCSS['icon']} style={{color: "red"}}/></div>
                         </div>
                         <div className={RegisterFormCSS['input-box']}>
                             <input type="text" placeholder="Username" required onChange={handleUsernameChange}/>
-                            <div className={RegisterFormCSS['icon-class']}><FaUser className={RegisterFormCSS['icon']}/></div>
+                            <div className={RegisterFormCSS['icon-class']}><FaUser className={RegisterFormCSS['icon']} style={{color: "red"}}/></div>
                         </div>
                         <div className={RegisterFormCSS['input-box']}>
                             <input type="password" placeholder="Password" required onChange={handlePasswordChange}/>
-                            <div className={RegisterFormCSS['icon-class']}><RiLockPasswordFill className={RegisterFormCSS['icon']}/></div>
+                            <div className={RegisterFormCSS['icon-class']}><RiLockPasswordFill className={RegisterFormCSS['icon']} style={{color: "red"}}/></div>
                         </div>
-                        <div className={RegisterFormCSS['button']}><button type="submit">Sign In</button></div>
+                        <div className={RegisterFormCSS['button']}><button type="submit">Sign Up</button></div>
                         <div className={RegisterFormCSS['register-link']}><p style={{color: "white"}}>Already have an account? <a href="./login">Login</a></p></div>
                     </div>
                 </form>
             </div>
+            {isAccountRegistered && 
+                <AccountCreated onClose={handleAccountClose} />
+            }
+            {/* <AccountCreated onClose={handleAccountClose} /> */}
         </div>
     );
 }

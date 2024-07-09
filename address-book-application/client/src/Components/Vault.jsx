@@ -1,24 +1,13 @@
 import VaultCSS from './Vault.module.css';
-import { FaUser } from "react-icons/fa";
-import { RiLockPasswordFill } from "react-icons/ri";
+import { FaUser, FaHome } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import { RxHamburgerMenu } from "react-icons/rx";
-import { RxCross1 } from "react-icons/rx";
-import { IoLogIn } from "react-icons/io5";
-import { IoIosCreate } from "react-icons/io";
-import { BsInfoCircleFill } from "react-icons/bs";
-import { FaCircleInfo } from "react-icons/fa6";
-import { MdEditDocument } from "react-icons/md";
-import { MdDeleteForever } from "react-icons/md";
-import image from "../assets/connected-removebg-preview.png";
+import { RxHamburgerMenu, RxCross1 } from "react-icons/rx";
+import { MdEditDocument, MdDeleteForever, MdAddBox } from "react-icons/md";
 import { GiMaterialsScience } from "react-icons/gi";
 import { useRef, useState } from 'react';
-import { FaHome } from "react-icons/fa";
 import { CiLogout } from "react-icons/ci";
-import { MdAddBox } from "react-icons/md";
 import { useEffect } from 'react';
-import Test from './Test';
 import {jwtDecode} from 'jwt-decode';
 import AddressForm from './AddressForm';
 import AddressModal from './AddressModal';
@@ -71,7 +60,6 @@ const Vault = () => {
     }
     
     const toggleSideBar = () => {
-        console.log("togggled");
         setShowSideBar(!showSideBar);
     }
 
@@ -157,7 +145,7 @@ const Vault = () => {
                 </ul>}
                 <ul className={VaultCSS['horizontal-bar']}>
                     <li><a className={VaultCSS["product"]} href="./home"><GiMaterialsScience className={VaultCSS['science-logo']} style={{marginRight: "10px", fontSize: "30px", color: "magenta"}}/><span className={VaultCSS['vault-text']}>AddressVault</span></a></li>
-                    <li className={VaultCSS["searchBar-container"]}><div className={VaultCSS["searchBar"]}><input type='text' placeholder='Search by name, state, location, country etc' onChange={searchOperation}></input></div></li>
+                    <li className={VaultCSS["searchBar-container"]}><div className={VaultCSS["searchBar"]}><input type='text' placeholder='Search by name, state, location, country etc' onChange={searchOperation} style={{padding: "10px"}}></input></div></li>
                     <li className={VaultCSS['hideOnMobile']}><a href="./home">Home<FaHome style={{marginLeft:"5px", color:"red"}}/></a></li>
                     <li className={VaultCSS['hideOnMobile']}><a onClick={toggleUserVisibility}>User<FaUser style={{marginLeft:"5px", color:"yellow"}} /></a></li>
                     <li className={VaultCSS['hideOnMobile']}><a href="./home" onClick={() => {handleLogout(); setLogoutPress(true)}}>LogOut<CiLogout style={{marginLeft:"5px", color:"blue"}}/></a></li>

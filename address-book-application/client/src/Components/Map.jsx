@@ -22,20 +22,16 @@ const Map = ({address}) => {
                 key: 'AIzaSyDdAVva_hPAJtlP2Xutm2kGi1z3etA7Jsk'
               }
             });
-            console.log("RES", response);
             const location = response.data.results[0].geometry.location;
             setCoordinates(location);
-            // console.log("loc:", location);
-          } catch (error) {
+          } 
+          catch (error) {
             console.error('Error fetching coordinates:', error);
           }
         };
     
         fetchCoordinates();
       }, []);
-    // console.log("ad", address.geometry);
-
-    // const {latitude, longitude} = address.geometry.location;
 
     return(
         <>

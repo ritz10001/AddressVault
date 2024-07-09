@@ -1,12 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AddressFormCSS from './AddressForm.module.css'; 
 import axios from 'axios';
 import Select from 'react-select';
 import { countries } from '../countriesjson';
-import { LoadScript, Autocomplete, GoogleMap, useJsApiLoader } from '@react-google-maps/api';
-/*APIKEY=AIzaSyDdAVva_hPAJtlP2Xutm2kGi1z3etA7Jsk*/ 
 import ReactGoogleAutocomplete from 'react-google-autocomplete';
+
 const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit, onClose }) => {
+    
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
@@ -19,13 +19,9 @@ const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit,
     const [states, setStates] = useState([]);
     const [isCountrySelected, setIsCountrySelected] = useState(false);
     const [isStateSelected, setIsStateSelected] = useState(false);
-    const [isCitySelected, setIsCitySelected] = useState(false);
     const [countryCode, setCountryCode] = useState("");
-	const autocompleteRef = useRef();
 
     useEffect(() => {
-        console.log("entered useeffect");
-        console.log(addressToEdit);
         if(addressToEdit){
             setName(addressToEdit.name);
             setEmail(addressToEdit.email);
@@ -38,7 +34,6 @@ const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit,
             setCountry(addressToEdit.country);
             setStates(countries.find(c => c.name === addressToEdit.country)?.states || []);
             setIsCountrySelected(true);
-            // console.log(addressToEdit.state);
             setIsStateSelected(!!addressToEdit.state);
 
         }
@@ -63,10 +58,8 @@ const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit,
             axios.put(`http://localhost:3001/vault/${addressToEdit._id}`, newAddress, 
                 {headers: { "Authorization": `Bearer ${token}` }}
             ).then(response => {
-                console.log(addresses[0]._id);
                 const updatedAddresses = addresses.map(address => address._id === addressToEdit._id ? response.data : address);
                 setAddresses(updatedAddresses);
-                console.log("updated", updatedAddresses);
                 onClose();
             }).catch(error => console.log(error));
         }
@@ -94,7 +87,6 @@ const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit,
     const handleCountryChange = (selectedOption) => {
         setCountry(selectedOption.name);
         setCountryCode(selectedOption.code3.toLowerCase());
-        console.log(selectedOption.code3.toLowerCase());
         setStates(selectedOption.states.map(state => ({label: state.name, value: state.name})));
         setState("");
         setIsCountrySelected(true);
@@ -175,12 +167,10 @@ const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit,
                     }}
                     disabled={!isStateSelected}
                     defaultValue={city}
-                    onChange={e => {setCity(e.target.value); console.log(country)}}
+                    onChange={e => {setCity(e.target.value)}}
                 />
 
-
                 <input type="text" placeholder="Address Line 2" value={addressLine2} onChange={e => setAddressLine2(e.target.value)}/>
-                
 
                 <input type="text" 
                 placeholder="Postal Code" 
