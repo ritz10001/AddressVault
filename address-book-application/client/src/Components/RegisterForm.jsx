@@ -54,10 +54,10 @@ const RegisterForm = () => {
                         </div>
                         <div className={RegisterFormCSS['input-box']}>
                             <input type="text" placeholder="Username" required onChange={handleUsernameChange}/>
-                            <div className={RegisterFormCSS['icon-class']}><RiLockPasswordFill className={RegisterFormCSS['icon']}/></div>
+                            <div className={RegisterFormCSS['icon-class']}><FaUser className={RegisterFormCSS['icon']}/></div>
                         </div>
                         <div className={RegisterFormCSS['input-box']}>
-                            <input type="text" placeholder="Password" required onChange={handlePasswordChange}/>
+                            <input type="password" placeholder="Password" required onChange={handlePasswordChange}/>
                             <div className={RegisterFormCSS['icon-class']}><RiLockPasswordFill className={RegisterFormCSS['icon']}/></div>
                         </div>
                         <div className={RegisterFormCSS['button']}><button type="submit">Sign In</button></div>

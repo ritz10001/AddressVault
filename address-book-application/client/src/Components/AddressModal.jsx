@@ -2,6 +2,7 @@ import React from 'react';
 import AddressModalCSS from './AddressModal.module.css';
 import axios from 'axios';
 import { RxCross1 } from "react-icons/rx";
+import Map from './Map';
 
 const AddressModal = ({address, onClose}) => {
     if(!address){
@@ -21,6 +22,8 @@ const AddressModal = ({address, onClose}) => {
                 <p>State: {address.state}</p>
                 <p>Postal Code: {address.postalCode}</p>
                 <p>Country: {address.country}</p>
+                <br></br>
+                <Map address={address} />
             </div>
         </div>
     );
