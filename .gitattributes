@@ -5,6 +5,6 @@
 *.png linguist-vendored
 *.jpg linguist-vendored
 *.gif linguist-vendored
-client/src/countriesjson.js linguist-vendored
+*countriesjson.js linguist-vendored
 node_modules/* linguist-vendored
 public/* linguist-vendored
