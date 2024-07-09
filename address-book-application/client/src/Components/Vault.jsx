@@ -190,7 +190,7 @@ const Vault = () => {
                             <div className={VaultCSS["opContainer"]} style={{display: "flex"}}>
                                 <h2 style={{marginRight:"auto", color: "red"}} onClick={() => handleCardClick(address)}>{address.name}</h2>
                                 <button onClick = {() => editAddress(address)} style={{border: "2px solid black", borderRadius: "5px", height: "40px", backgroundColor: "limegreen", color: "white", fontWeight: "bold", padding: "0px 10px", fontSize: "15px", display: "flex", alignItems: "center"}}>Edit<MdEditDocument style={{fontSize: "20px"}}/></button>
-                                <button onClick = {() => deleteAddress(address)} style={{border: "2px solid black", borderRadius: "5px", height: "40px", backgroundColor: "red", color: "white", fontWeight: "bold", padding: "0px 10px", fontSize: "15px", display: "flex", alignItems: "center" }}>Delete<MdDeleteForever style={{fontSize: "20px"}}/></button>
+                                <button onClick = {() => deleteAddress(address)} style={{border: "2px solid black", borderRadius: "5px", height: "40px", backgroundColor: "red", color: "white", fontWeight: "bold", padding: "0px 10px", fontSize: "15px", display: "flex", alignItems: "center"}}>Delete<MdDeleteForever style={{fontSize: "20px"}}/></button>
                             </div>
                             <div className="info" onClick = {() => handleCardClick(address)}>
                                 <p style={{color: "white"}}>{address.city}</p>

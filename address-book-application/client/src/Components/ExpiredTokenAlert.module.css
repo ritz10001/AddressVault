@@ -37,4 +37,9 @@
     font-weight: bold;
     border: none;
     width: 90%;
+    opacity: 1;
+}
+.ok button:hover{
+    opacity: 0.8;
+    transition: 0.3s;
 }

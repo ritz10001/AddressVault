@@ -130,8 +130,17 @@ const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit,
         <div className={AddressFormCSS['form-container']}>
             <form onSubmit={handleFormSubmit}>
                 <h2 style={{color: "red", textAlign: "center"}}>{addressToEdit ? 'Edit Address': 'Add Address'}</h2>
-                <input type="text" placeholder="Name" required value={name} onChange={e => setName(e.target.value)}/>
-                <input type="text" placeholder="Email" required value={email} onChange={e => setEmail(e.target.value)}/>
+                <input type="text" 
+                style={{paddingLeft: "5%"}}
+                placeholder="Name" 
+                required value={name} 
+                onChange={e => setName(e.target.value)}/>
+
+                <input type="text" 
+                style={{paddingLeft: "5%"}}
+                placeholder="Email" 
+                required value={email} 
+                onChange={e => setEmail(e.target.value)}/>
 
                 <Select placeholder="Country" options={countries} required
                 getOptionLabel={option => option.name} 
@@ -144,10 +153,10 @@ const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit,
                 getOptionValue={option => option.value} 
                 isDisabled={!isCountrySelected}
                 onChange={handleStateChange} />
-                <h4 style={{color: "white"}}>{country}</h4>
 
                 <ReactGoogleAutocomplete 
                 placeholder="Address Line 1"
+                style={{paddingLeft: "5%"}}
                 apiKey="AIzaSyDdAVva_hPAJtlP2Xutm2kGi1z3etA7Jsk" 
                 onPlaceSelected={handlePlaceSelected}
                 options={{
@@ -159,6 +168,7 @@ const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit,
 
                 <ReactGoogleAutocomplete
                     placeholder="City"
+                    style={{paddingLeft: "5%"}}
                     apiKey="AIzaSyDdAVva_hPAJtlP2Xutm2kGi1z3etA7Jsk"
                     onPlaceSelected={place => {setCity(place.address_components[0].long_name)}}
                     options={{
@@ -170,21 +180,27 @@ const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit,
                     onChange={e => {setCity(e.target.value)}}
                 />
 
-                <input type="text" placeholder="Address Line 2" value={addressLine2} onChange={e => setAddressLine2(e.target.value)}/>
+                <input type="text" 
+                style={{paddingLeft: "5%"}}
+                placeholder="Address Line 2" 
+                value={addressLine2} 
+                onChange={e => setAddressLine2(e.target.value)}/>
 
                 <input type="text" 
+                style={{paddingLeft: "5%"}}
                 placeholder="Postal Code" 
                 required value={postalCode} 
                 onChange={e => setPostalCode(e.target.value)}/>
 
                 <input type="text" 
+                style={{paddingLeft: "5%"}}
                 placeholder="Phone" 
                 required value={phone} 
                 onChange={e => setPhone(e.target.value)} 
-                disabled={!isCountrySelected}/>
+                />
                 
-                <button type="submit">{addressToEdit ? 'Edit Address': 'Add Address'}</button>
-                <button type="button" onClick={onClose}>Cancel</button>
+                <button className={AddressFormCSS['address-btn']} type="submit">{addressToEdit ? 'Edit Address': 'Add Address'}</button>
+                <button className={AddressFormCSS['address-btn']} type="button" onClick={onClose}>Cancel</button>
             </form>
         </div>
     );
