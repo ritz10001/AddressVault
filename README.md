@@ -54,19 +54,29 @@ Install the dependencies for frontend and backend
 
 ![homepagescrnshot](https://github.com/ritz10001/AddressVault/assets/87536301/c8370c9f-6d84-477e-825c-b5a3cdc5a742)
 
+![Screenshot (451)](https://github.com/ritz10001/AddressVault/assets/87536301/aca547de-01a4-46a9-a64e-bac3251757f0)
+
+![Screenshot (452)](https://github.com/ritz10001/AddressVault/assets/87536301/9448b171-ecb7-41bb-91c6-1fb2897fb49a)
+
 • Once you have created an account, log in with that account.
 
-![Screenshot (433)](https://github.com/ritz10001/AddressVault/assets/87536301/bb0a3ea4-ed67-4256-ad09-4a69922427fc)
+![Screenshot (453)](https://github.com/ritz10001/AddressVault/assets/87536301/782f93a0-6b4a-43be-986b-a30e9f563671)
+
 
 • Add, edit, or delete address records by using the add, edit or delete buttons respectively. 
 
-![Screenshot (435)](https://github.com/ritz10001/AddressVault/assets/87536301/4bcf2cc6-9c37-48cb-95fb-ec37e61e9d76)
-
 • While adding or editing addresses, you must select from one of the suggestions the autocomplete provides under the address line field. This is how the address the validated so that no fake addresses can be created.
+
+
+![Screenshot (455)](https://github.com/ritz10001/AddressVault/assets/87536301/9c08352d-4183-405d-b909-fd3d8f4dec84)
+![Screenshot (456)](https://github.com/ritz10001/AddressVault/assets/87536301/5cf273dc-d745-49f7-96b4-f47aac899637)
+![Screenshot (457)](https://github.com/ritz10001/AddressVault/assets/87536301/c6261a24-1dc6-4081-8b8e-873abb898d03)
 
 • Use the search bar and sort functionality button to manage addresses. You can sort by name and date at which the record was created.
 
 • View full address information with a map display by clicking directly on the address record. This is where the map displays as well at the bottom.
+
+![Screenshot (458)](https://github.com/ritz10001/AddressVault/assets/87536301/e681ea03-6aea-4fda-b49f-042433b07520)
 
 • Clicking on the user option on the navbar will give some basic user information such as email and name of the currently logged in user. 
 
