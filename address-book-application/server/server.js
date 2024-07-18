@@ -9,6 +9,7 @@ const vaultRoutes = require("./routes/vaultRoutes");
 const dotenv = require("dotenv").config();
 const errorHandler = require("./middleware/errorHandler");
 const envRouter = require("./routes/envRoute");
+const port = process.env.port || 3001;
 
 app.use(express.json());
 app.use(cors());
@@ -20,4 +21,4 @@ app.use("/user", userRoutes);
 app.use('/api', envRouter);
 app.use(errorHandler);
 
-app.listen(process.env.PORT, () => console.log("server is running"));
+app.listen(port, () => console.log("server is running"));
