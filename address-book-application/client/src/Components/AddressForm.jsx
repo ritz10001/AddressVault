@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import AddressFormCSS from './AddressForm.module.css'; 
 import axios from 'axios';
 import Select from 'react-select';
@@ -19,9 +19,15 @@ const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit,
     const [states, setStates] = useState([]);
     const [isCountrySelected, setIsCountrySelected] = useState(false);
     const [isStateSelected, setIsStateSelected] = useState(false);
+    const [isCitySelected, setIsCitySelected] = useState(false);
     const [countryCode, setCountryCode] = useState("");
+    const [apiKey, setApiKey] = useState("");
 
     useEffect(() => {
+        axios.get('http://localhost:3001/api/env')
+        .then(res => setApiKey(res.data["API_KEY"]))
+        .catch(err => console.log(err));
+        console.log("KEY", apiKey)
         if(addressToEdit){
             setName(addressToEdit.name);
             setEmail(addressToEdit.email);
@@ -91,17 +97,19 @@ const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit,
         setState("");
         setIsCountrySelected(true);
         setIsStateSelected(false);
+        setIsCitySelected(false);
     }
 
     const handleStateChange = (selectedOption) => {
         setState(selectedOption.value);
         setCity("");
         setIsStateSelected(true);
+        setIsCitySelected(false);
     }
 
-    const handlePlaceSelected = (place) => {
+    const handlePlaceSelected = async (place) => {
 
-        const addressComponents = place.address_components;
+        const addressComponents = await place.address_components;
         const address = {
             city: "",
             state: "",
@@ -124,6 +132,7 @@ const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit,
         setCity(address.city);
         setPostalCode(address.postalCode);
         setState(address.state);
+        setIsCitySelected(true);
     }
 
     return (
@@ -154,23 +163,25 @@ const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit,
                 isDisabled={!isCountrySelected}
                 onChange={handleStateChange} />
 
-                <ReactGoogleAutocomplete 
+                {apiKey && <ReactGoogleAutocomplete 
                 placeholder="Address Line 1"
                 style={{paddingLeft: "5%"}}
-                apiKey="AIzaSyDdAVva_hPAJtlP2Xutm2kGi1z3etA7Jsk" 
+                apiKey={apiKey} 
                 onPlaceSelected={handlePlaceSelected}
                 options={{
                     types: ['address'],
                     componentRestrictions: { country: countryCode },
                 }}
                 defaultValue={addressLine1}
-                onChange={e => setAddressLine1(e.target.value)} />
+                onChange={e => setAddressLine1(e.target.value)} 
+                disabled={!isStateSelected && !isCountrySelected}/>}
+                
 
-                <ReactGoogleAutocomplete
+                {apiKey && <ReactGoogleAutocomplete
                     placeholder="City"
                     style={{paddingLeft: "5%"}}
-                    apiKey="AIzaSyDdAVva_hPAJtlP2Xutm2kGi1z3etA7Jsk"
-                    onPlaceSelected={place => {setCity(place.address_components[0].long_name)}}
+                    apiKey={apiKey} 
+                    onPlaceSelected={(place) => {setCity(place.address_components[0].long_name)}}
                     options={{
                         types: ['(cities)'],
                         componentRestrictions: { country: countryCode },
@@ -178,26 +189,28 @@ const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit,
                     disabled={!isStateSelected}
                     defaultValue={city}
                     onChange={e => {setCity(e.target.value)}}
-                />
+                />}
 
                 <input type="text" 
                 style={{paddingLeft: "5%"}}
                 placeholder="Address Line 2" 
                 value={addressLine2} 
-                onChange={e => setAddressLine2(e.target.value)}/>
+                onChange={e => setAddressLine2(e.target.value)}
+                disabled={!isStateSelected}/>
 
                 <input type="text" 
                 style={{paddingLeft: "5%"}}
                 placeholder="Postal Code" 
                 required value={postalCode} 
-                onChange={e => setPostalCode(e.target.value)}/>
+                onChange={e => setPostalCode(e.target.value)}
+                disabled={!isStateSelected}/>
 
                 <input type="text" 
                 style={{paddingLeft: "5%"}}
                 placeholder="Phone" 
                 required value={phone} 
                 onChange={e => setPhone(e.target.value)} 
-                />
+                disabled={!isStateSelected}/>
                 
                 <button className={AddressFormCSS['address-btn']} type="submit">{addressToEdit ? 'Edit Address': 'Add Address'}</button>
                 <button className={AddressFormCSS['address-btn']} type="button" onClick={onClose}>Cancel</button>

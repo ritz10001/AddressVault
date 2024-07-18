@@ -11,19 +11,39 @@ const containerStyle = {
 
 const Map = ({address}) => {
     const [coordinates, setCoordinates] = useState(null);
+    const [apiKey, setApiKey] = useState("");
+    const [apiKeyLoaded, setApiKeyLoaded] = useState(false);
+
+    useEffect(() => {
+      const fetchApiKey = async () => {
+          try {
+              console.log("hello from fetch");
+              await axios.get('http://localhost:3001/api/env').then(res => setApiKey(res.data["API_KEY"]));
+              setApiKeyLoaded(true);
+          } catch (err) {
+              console.log(err);
+          }
+      };
+
+      fetchApiKey();
+    }, []);
 
     useEffect(() => {
         const fetchCoordinates = async () => {
+          if (!apiKeyLoaded || !apiKey) return;
+
           const fullAddress = `${address.addressLine1}, ${address.city}, ${address.state}, ${address.country}`;
           try {
             const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json`, {
               params: {
                 address: fullAddress,
-                key: 'AIzaSyDdAVva_hPAJtlP2Xutm2kGi1z3etA7Jsk'
+                key: apiKey
               }
             });
-            const location = response.data.results[0].geometry.location;
+            const location = await response.data.results[0].geometry.location;
+            
             setCoordinates(location);
+            
           } 
           catch (error) {
             console.error('Error fetching coordinates:', error);
@@ -31,35 +51,37 @@ const Map = ({address}) => {
         };
     
         fetchCoordinates();
-      }, []);
+      }, [apiKey, apiKeyLoaded]);
 
     return(
         <>
-        {typeof window !== 'undefined' && window.google ? 
+        {typeof window !== 'undefined' && window.google && apiKeyLoaded && coordinates ? 
                 <div className={MapCSS['map-container']}>
                     <GoogleMap mapContainerClassName={MapCSS['map-container-2']}
                         mapContainerStyle={containerStyle}
                         center={coordinates}
                         zoom={15}
-                        >
+                    >
                         <Marker position={coordinates} />
                     </GoogleMap>
                 </div>
-                 : <LoadScript googleMapsApiKey="AIzaSyDdAVva_hPAJtlP2Xutm2kGi1z3etA7Jsk">
-            {coordinates ? (
-                <div className={MapCSS['map-container']}>
-                <GoogleMap mapContainerClassName={MapCSS['map-container']}
-                mapContainerStyle={containerStyle}
-                center={coordinates}
-                zoom={15}
-                >
-                <Marker position={coordinates} />
-                </GoogleMap>
-                </div>
-            ) : (
-                <p>Loading map...</p>
-            )}
-        </LoadScript>}
+                 : 
+                  <LoadScript googleMapsApiKey={apiKey}>
+                      {coordinates ? (
+                          <div className={MapCSS['map-container']}>
+                          <GoogleMap mapContainerClassName={MapCSS['map-container']}
+                          mapContainerStyle={containerStyle}
+                          center={coordinates}
+                          zoom={15}
+                          >
+                          <Marker position={coordinates} />
+                          </GoogleMap>
+                          </div>
+                      ) : (
+                          <p>Loading map...</p>
+                      )}
+                    </LoadScript>
+                    }
         </>
     );
 }

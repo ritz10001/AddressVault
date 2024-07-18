@@ -1,5 +1,5 @@
 const express = require("express");
-const { getAddresses, getAddressById, createAddress, updateAddress, deleteAddress } = require("../controllers/vaultController");
+const {getAddresses, getAddressById, createAddress, updateAddress, deleteAddress } = require("../controllers/vaultController");
 const validateToken = require("../middleware/validateToken");
 
 const router = express.Router();
