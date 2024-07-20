@@ -13,6 +13,7 @@ import AddressModal from './AddressModal';
 import UserInfo from './UserInfo';
 import ExpiredTokenAlert from './ExpiredTokenAlert';
 import { RiLogoutCircleFill } from "react-icons/ri";
+import { BASE_URL } from '../url';
 
 const Vault = () => {
 
@@ -34,12 +35,12 @@ const Vault = () => {
 
         setTokenTimeout(token, handleLogout);
         
-        axios.get('http://localhost:3001/vault', 
+        axios.get(`${BASE_URL}/vault`, 
             {headers: {"Authorization": `Bearer ${token}`}}
         ).then(response => {setAddresses(response.data); setOriginalAddresses(structuredClone(response.data));})
             .catch(err => console.log(err));
 
-        axios.get('http://localhost:3001/user/current', 
+        axios.get(`${BASE_URL}/user/current`, 
             {headers: {"Authorization": `Bearer ${token}`}}
         ).then(response => {setUName(response.data["name"])}
         ).catch(error => navigate('/login'));
@@ -104,7 +105,7 @@ const Vault = () => {
 
     const deleteAddress = (address) => {
         const token = localStorage.getItem("jsonwebtoken");
-        axios.delete(`http://localhost:3001/vault/${address._id}`, {headers: {"Authorization": `Bearer ${token}`}}).then(
+        axios.delete(`${BASE_URL}/vault/${address._id}`, {headers: {"Authorization": `Bearer ${token}`}}).then(
             response => {
                 const updatedAddresses = addresses.filter(a => a._id !== address._id);
                 setAddresses(updatedAddresses);

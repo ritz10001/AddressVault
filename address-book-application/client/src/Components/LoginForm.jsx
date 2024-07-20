@@ -5,6 +5,7 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import Test from "./Test";
+import { BASE_URL } from "../url";
 
 const LoginForm = ({userName, setUserName}) => {
 
@@ -22,7 +23,7 @@ const LoginForm = ({userName, setUserName}) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:3001/user/login', {email, password})
+        axios.post(`${BASE_URL}/user/login`, {email, password})
         .then(res => {
             if(res.data["status"] === "success"){
                 setIsLoginFail(false);

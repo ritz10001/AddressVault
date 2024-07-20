@@ -3,6 +3,7 @@ import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import MapCSS from './Map.module.css';
+import { BASE_URL } from "../url";
 
 const containerStyle = {
     width: '400px',
@@ -18,7 +19,7 @@ const Map = ({address}) => {
       const fetchApiKey = async () => {
           try {
               console.log("hello from fetch");
-              await axios.get('http://localhost:3001/api/env').then(res => setApiKey(res.data["API_KEY"]));
+              await axios.get(`${BASE_URL}/api/env`).then(res => setApiKey(res.data["API_KEY"]));
               setApiKeyLoaded(true);
           } catch (err) {
               console.log(err);

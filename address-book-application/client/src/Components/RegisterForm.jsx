@@ -6,6 +6,7 @@ import {useState} from 'react';
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 import AccountCreated from "./AccountCreated";
+import { BASE_URL } from "../url";
 
 const RegisterForm = () => {
 
@@ -39,7 +40,7 @@ const RegisterForm = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:3001/user/register', {name, email, username, password})
+        axios.post(`${BASE_URL}/user/register`, {name, email, username, password})
         .then(res => handleAccountClose())
         .catch(e => console.log(e));
 
@@ -74,7 +75,6 @@ const RegisterForm = () => {
             {isAccountRegistered && 
                 <AccountCreated onClose={handleAccountClose} />
             }
-            {/* <AccountCreated onClose={handleAccountClose} /> */}
         </div>
     );
 }

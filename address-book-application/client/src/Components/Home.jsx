@@ -9,7 +9,6 @@ import { FaCircleInfo } from "react-icons/fa6";
 import image from "../assets/connected-removebg-preview.png";
 import { GiMaterialsScience } from "react-icons/gi";
 
-
 const Home = () => {
 
     const [showSideBar, setShowSideBar] = useState(false);

@@ -4,6 +4,7 @@ import axios from 'axios';
 import Select from 'react-select';
 import { countries } from '../countriesjson';
 import ReactGoogleAutocomplete from 'react-google-autocomplete';
+import { BASE_URL } from '../url';
 
 const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit, onClose }) => {
     
@@ -24,7 +25,7 @@ const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit,
     const [apiKey, setApiKey] = useState("");
 
     useEffect(() => {
-        axios.get('http://localhost:3001/api/env')
+        axios.get(`${BASE_URL}/api/env`)
         .then(res => setApiKey(res.data["API_KEY"]))
         .catch(err => console.log(err));
         console.log("KEY", apiKey)
@@ -61,7 +62,7 @@ const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit,
         };
 
         if(addressToEdit){
-            axios.put(`http://localhost:3001/vault/${addressToEdit._id}`, newAddress, 
+            axios.put(`${BASE_URL}/vault/${addressToEdit._id}`, newAddress, 
                 {headers: { "Authorization": `Bearer ${token}` }}
             ).then(response => {
                 const updatedAddresses = addresses.map(address => address._id === addressToEdit._id ? response.data : address);
@@ -70,7 +71,7 @@ const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit,
             }).catch(error => console.log(error));
         }
         else{
-            axios.post('http://localhost:3001/vault', newAddress, 
+            axios.post(`${BASE_URL}/vault`, newAddress, 
                 { headers: { "Authorization": `Bearer ${token}` } }
             ).then(response => {
                 setAddresses([...addresses, response.data]);

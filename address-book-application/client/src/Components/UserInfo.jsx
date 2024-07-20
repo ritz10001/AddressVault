@@ -2,12 +2,13 @@ import React, { useEffect, useState, useRef } from 'react';
 import UserInfoCSS from './UserInfo.module.css';
 import axios from 'axios';
 import { RxCross1 } from "react-icons/rx";
+import { BASE_URL } from '../url';
 
 const UserInfo = ({onClose}) => {
     const [userInfo, setUserInfo] = useState(null);
     const token = localStorage.getItem("jsonwebtoken");
     useEffect(() => {
-        axios.get('http://localhost:3001/user/current', {headers: {"Authorization": `Bearer ${token}` }}).then(
+        axios.get(`${BASE_URL}/user/current`, {headers: {"Authorization": `Bearer ${token}` }}).then(
             response => {
                 console.log(response);
                 setUserInfo(response.data);
