@@ -10,6 +10,7 @@ const dotenv = require("dotenv").config();
 const errorHandler = require("./middleware/errorHandler");
 const envRouter = require("./routes/envRoute");
 const port = process.env.PORT || 3001;
+console.log(port);
 
 app.use(express.json());
 app.use(cors());
