@@ -13,6 +13,7 @@ import AddressForm from './AddressForm';
 import AddressModal from './AddressModal';
 import UserInfo from './UserInfo';
 import ExpiredTokenAlert from './ExpiredTokenAlert';
+import { RiLogoutCircleFill } from "react-icons/ri";
 
 const Vault = () => {
 
@@ -139,16 +140,16 @@ const Vault = () => {
                 {showSideBar && 
                 <ul className={VaultCSS['side-bar']}>
                     <li><a href="#" aria-label='Close' onClick={toggleSideBar}><RxCross1 style={{marginLeft: "auto"}}/></a></li>
-                    <li><a href="./home">Home<FaHome style={{marginLeft:"10px", color:"red"}}/></a></li>
-                    <li><a onClick={doubleFunction}>User Information<FaUser style={{marginLeft:"10px", color:"yellow"}} /></a></li>
-                    <li><a href="./home" onClick={handleLogout}>Log out<CiLogout style={{marginLeft:"10px", color:"blue"}}/></a></li>
+                    <li><a href="./home">Home<FaHome style={{marginLeft:"10px", color:"#5783EB"}}/></a></li>
+                    <li><a onClick={doubleFunction}>User Information<FaUser style={{marginLeft:"10px", color: "#5783EB"}} /></a></li>
+                    <li><a href="./home" onClick={handleLogout}>Log out<RiLogoutCircleFill style={{marginLeft:"10px", color: "#5783EB"}}/></a></li>
                 </ul>}
                 <ul className={VaultCSS['horizontal-bar']}>
-                    <li><a className={VaultCSS["product"]} href="./home"><GiMaterialsScience className={VaultCSS['science-logo']} style={{marginRight: "10px", fontSize: "30px", color: "magenta"}}/><span className={VaultCSS['vault-text']}>AddressVault</span></a></li>
+                    <li><a className={VaultCSS["product"]} href="./home"><GiMaterialsScience className={VaultCSS['science-logo']} style={{marginRight: "10px", fontSize: "30px", color: "#5783EB"}}/><span className={VaultCSS['vault-text']}>AddressVault</span></a></li>
                     <li className={VaultCSS["searchBar-container"]}><div className={VaultCSS["searchBar"]}><input type='text' placeholder='Search by name, state, location, country etc' onChange={searchOperation} style={{padding: "10px"}}></input></div></li>
-                    <li className={VaultCSS['hideOnMobile']}><a href="./home">Home<FaHome style={{marginLeft:"5px", color:"red"}}/></a></li>
-                    <li className={VaultCSS['hideOnMobile']}><a onClick={toggleUserVisibility}>User<FaUser style={{marginLeft:"5px", color:"yellow"}} /></a></li>
-                    <li className={VaultCSS['hideOnMobile']}><a href="./home" onClick={() => {handleLogout(); setLogoutPress(true)}}>LogOut<CiLogout style={{marginLeft:"5px", color:"blue"}}/></a></li>
+                    <li className={VaultCSS['hideOnMobile']}><a href="./home">Home<FaHome style={{marginLeft:"5px", color: "#5783EB"}}/></a></li>
+                    <li className={VaultCSS['hideOnMobile']}><a onClick={toggleUserVisibility}>User<FaUser style={{marginLeft:"5px", color: "#5783EB"}} /></a></li>
+                    <li className={VaultCSS['hideOnMobile']}><a href="./home" onClick={() => {handleLogout(); setLogoutPress(true)}}>LogOut<RiLogoutCircleFill style={{marginLeft:"5px", color: "#5783EB"}}/></a></li>
                     <li className={VaultCSS["menu-button"]} onClick={toggleSideBar} ><a href="#"><RxHamburgerMenu /></a></li>
                 </ul>
             </nav>
@@ -158,8 +159,8 @@ const Vault = () => {
             <div className={VaultCSS["home-container-2"]}>
                 <div className={VaultCSS['controls-container']}>
                     <div className={VaultCSS['sort-by']}>
-                        <label htmlFor="sort" style={{color: "white", fontWeight: "bold"}}>Sort By: &nbsp;&nbsp;&nbsp;</label>
-                        <select id="sort" name="sort" onChange={(e) =>{
+                        <label htmlFor="sort" style={{color: "white"}}>Sort By: &nbsp;&nbsp;&nbsp;</label>
+                        <select style={{width: "100px"}} id="sort" name="sort" onChange={(e) =>{
                             if(e.target.value === 'name'){
                                 sortByName(addresses);
                             }
@@ -167,7 +168,7 @@ const Vault = () => {
                                 setAddresses(structuredClone(originalAddresses));
                             }
                             }}>
-                            <option value="date">Date</option>
+                            <option value="date" style={{color: "red"}}>Date</option>
                             <option value="name">Name</option>
                         </select>
                     </div>
@@ -184,13 +185,13 @@ const Vault = () => {
                     onClose = {handleFormClose}
                 />
                 )}
-                <div>
+                <div style={{paddingTop: "20px"}}>
                     {addresses.map((address, idx) => (
-                        <div className={VaultCSS["cards-container"]} style={{ margin: "10px"}} key={idx}>
+                        <div className={VaultCSS["cards-container"]} style={{margin: "10px"}} key={idx}>
                             <div className={VaultCSS["opContainer"]} style={{display: "flex"}}>
-                                <h2 style={{marginRight:"auto", color: "red"}} onClick={() => handleCardClick(address)}>{address.name}</h2>
-                                <button onClick = {() => editAddress(address)} style={{border: "2px solid black", borderRadius: "5px", height: "40px", backgroundColor: "limegreen", color: "white", fontWeight: "bold", padding: "0px 10px", fontSize: "15px", display: "flex", alignItems: "center"}}>Edit<MdEditDocument style={{fontSize: "20px"}}/></button>
-                                <button onClick = {() => deleteAddress(address)} style={{border: "2px solid black", borderRadius: "5px", height: "40px", backgroundColor: "red", color: "white", fontWeight: "bold", padding: "0px 10px", fontSize: "15px", display: "flex", alignItems: "center"}}>Delete<MdDeleteForever style={{fontSize: "20px"}}/></button>
+                                <h2 style={{marginRight:"auto", color: "#5783EB"}} onClick={() => handleCardClick(address)}>{address.name}</h2>
+                                <button onClick = {() => editAddress(address)} style={{border: "2px solid black", borderRadius: "5px", height: "40px", backgroundColor: "limegreen", color: "white", fontWeight: "bold", padding: "0px 10px", fontSize: "15px", display: "flex", alignItems: "center", margin: "0 12.5px"}}><MdEditDocument style={{fontSize: "20px"}}/></button>
+                                <button onClick = {() => deleteAddress(address)} style={{border: "2px solid black", borderRadius: "5px", height: "40px", backgroundColor: "red", color: "white", fontWeight: "bold", padding: "0px 10px", fontSize: "15px", display: "flex", alignItems: "center"}}><MdDeleteForever style={{fontSize: "20px"}}/></button>
                             </div>
                             <div className="info" onClick = {() => handleCardClick(address)}>
                                 <p style={{color: "white"}}>{address.city}</p>

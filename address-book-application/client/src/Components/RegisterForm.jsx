@@ -47,27 +47,27 @@ const RegisterForm = () => {
     return (
         <div className={RegisterFormCSS['body-class']}>
             <div className={RegisterFormCSS['container']}>
-                <h1 className={RegisterFormCSS['form-title']}>Registration</h1>
+                <h1 className={RegisterFormCSS['form-title']} style={{color: "#5783EB"}}>Registration</h1>
                 <form onSubmit={handleSubmit}>
                     <div className={RegisterFormCSS['info']}>
                         <div className={RegisterFormCSS['input-box']}>
                             <input type="text" placeholder="Full Name" required onChange={handleNameChange}/>
-                            <div className={RegisterFormCSS['icon-class']}><FaUser className={RegisterFormCSS['icon']} style={{color: "red"}}/></div>
+                            <div className={RegisterFormCSS['icon-class']}><FaUser className={RegisterFormCSS['icon']} style={{color: "#5783EB"}}/></div>
                         </div>
                         <div className={RegisterFormCSS['input-box']}>
                             <input type="text" placeholder="Email Address" required onChange={handleEmailChange}/>
-                            <div className={RegisterFormCSS['icon-class']}><FaUser className={RegisterFormCSS['icon']} style={{color: "red"}}/></div>
+                            <div className={RegisterFormCSS['icon-class']}><FaUser className={RegisterFormCSS['icon']} style={{color: "#5783EB"}}/></div>
                         </div>
                         <div className={RegisterFormCSS['input-box']}>
                             <input type="text" placeholder="Username" required onChange={handleUsernameChange}/>
-                            <div className={RegisterFormCSS['icon-class']}><FaUser className={RegisterFormCSS['icon']} style={{color: "red"}}/></div>
+                            <div className={RegisterFormCSS['icon-class']}><FaUser className={RegisterFormCSS['icon']} style={{color: "#5783EB"}}/></div>
                         </div>
                         <div className={RegisterFormCSS['input-box']}>
                             <input type="password" placeholder="Password" required onChange={handlePasswordChange}/>
-                            <div className={RegisterFormCSS['icon-class']}><RiLockPasswordFill className={RegisterFormCSS['icon']} style={{color: "red"}}/></div>
+                            <div className={RegisterFormCSS['icon-class']}><RiLockPasswordFill className={RegisterFormCSS['icon']} style={{color: "#5783EB"}}/></div>
                         </div>
-                        <div className={RegisterFormCSS['button']}><button type="submit">Sign Up</button></div>
-                        <div className={RegisterFormCSS['register-link']}><p style={{color: "white"}}>Already have an account? <a href="./login">Login</a></p></div>
+                        <div className={RegisterFormCSS['button']}><button type="submit" style={{backgroundColor: "#5783EB"}}>Sign Up</button></div>
+                        <div className={RegisterFormCSS['register-link']}><p style={{color: "white"}}>Already have an account? <a href="./login" style={{color: "#5783EB", textDecoration: "underline"}}>Login</a></p></div>
                     </div>
                 </form>
             </div>

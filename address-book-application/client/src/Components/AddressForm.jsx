@@ -137,8 +137,8 @@ const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit,
 
     return (
         <div className={AddressFormCSS['form-container']}>
-            <form onSubmit={handleFormSubmit}>
-                <h2 style={{color: "red", textAlign: "center"}}>{addressToEdit ? 'Edit Address': 'Add Address'}</h2>
+            <form onSubmit={handleFormSubmit} style={{backgroundColor: "black"}}>
+                <h2 style={{color: "#5783EB", textAlign: "center"}}>{addressToEdit ? 'Edit Address': 'Add Address'}</h2>
                 <input type="text" 
                 style={{paddingLeft: "5%"}}
                 placeholder="Name" 
@@ -212,8 +212,8 @@ const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit,
                 onChange={e => setPhone(e.target.value)} 
                 disabled={!isStateSelected}/>
                 
-                <button className={AddressFormCSS['address-btn']} type="submit">{addressToEdit ? 'Edit Address': 'Add Address'}</button>
-                <button className={AddressFormCSS['address-btn']} type="button" onClick={onClose}>Cancel</button>
+                <button className={AddressFormCSS['address-btn']} style={{backgroundColor: "#5783EB"}} type="submit">{addressToEdit ? 'Edit Address': 'Add Address'}</button>
+                <button className={AddressFormCSS['address-btn']} style={{backgroundColor: "#5783EB"}} type="button" onClick={onClose}>Cancel</button>
             </form>
         </div>
     );

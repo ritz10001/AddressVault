@@ -43,25 +43,25 @@ const LoginForm = ({userName, setUserName}) => {
     return (
         <div className={LoginFormCSS['body-class']}>
             <div className={LoginFormCSS['wrapper']}>
-                <h1>Login</h1>
+                <h1 style={{color: "#5783EB"}}>Login</h1>
                 <form onSubmit={handleSubmit}>
                     <div className={LoginFormCSS['info']}>
                     <div className={LoginFormCSS['login-box']}>
                         
                         <input type="text" placeholder="Email Address" required onChange={e => setEmail(e.target.value)}/>
-                        <div className={LoginFormCSS['icon-class']}><FaUser className={LoginFormCSS['icon']}/></div>
+                        <div className={LoginFormCSS['icon-class']}><FaUser className={LoginFormCSS['icon']} style={{color: "#5783EB"}}/></div>
                     </div>
                     <div className={LoginFormCSS['login-box']}>
                         <input type="password" placeholder="Password" required onChange={e => setPassword(e.target.value)}/>
-                        <div className={LoginFormCSS['icon-class']}><RiLockPasswordFill className={LoginFormCSS['icon']}/></div>
+                        <div className={LoginFormCSS['icon-class']}><RiLockPasswordFill className={LoginFormCSS['icon']} style={{color: "#5783EB"}}/></div>
                     </div>
-                    <button className={LoginFormCSS['sign-in-button']} type="submit">Sign In</button>
+                    <button className={LoginFormCSS['sign-in-button']} type="submit" style={{backgroundColor: "#5783EB"}}>Sign In</button>
                     {isLoginFail &&
                         <div className={LoginFormCSS["fail"]} style={{marginTop: "10px", fontSize: "0.9rem"}}>
                             Incorrect Email or Password. Please try again.
                         </div>
                     }
-                    <div className={LoginFormCSS['register-link']}><p>Don't have an account? <a href="./register">Sign up</a></p></div>
+                    <div className={LoginFormCSS['register-link']}><p style={{color: "#5783EB"}}>Don't have an account? <a href="./register" style={{color: "#5783EB"}}>Sign up</a></p></div>
                     </div>
                     
                 </form>

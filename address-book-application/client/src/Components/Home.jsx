@@ -24,16 +24,16 @@ const Home = () => {
                 {showSideBar &&
                     <ul className={HomeCSS['sidebar']}>
                         <li onClick={toggleSideBar}><a href="#"><RxCross1 style={{marginLeft: "auto", backgroundColor: "blue"}}/></a></li>
-                        <li><a href="./login">Login<IoLogIn style={{marginLeft: "5px", color: "blue"}}/></a></li>
-                        <li><a href="./register">Register<IoIosCreate style={{marginLeft: "5px", color: "red"}}/></a></li>
-                        <li><a href="#">About<FaCircleInfo style={{marginLeft: "5px", color: "gold"}}/></a></li>
+                        <li><a href="./login">Login<IoLogIn style={{marginLeft: "5px", color: "#5783EB", fontWeight: "bold"}}/></a></li>
+                        <li><a href="./register">Register<IoIosCreate style={{marginLeft: "5px", color: "#5783EB", fontWeight: "bold"}}/></a></li>
+                        <li><a href="#">About<FaCircleInfo style={{marginLeft: "5px", color: "#5783EB", fontWeight: "bold"}}/></a></li>
                     </ul>
                 }
                 <ul className={HomeCSS['horizontalbar']}>
-                    <li><a className={HomeCSS["product"]} href="./home" style={{fontStyle: "italic", fontWeight:"bold", fontSize: "20px"}}><GiMaterialsScience style={{marginRight: "10px", fontSize: "30px", color: "magenta"}}/>Address Vault</a></li>
-                    <li className={HomeCSS["hideOnMobile"]}><a href="./login">Login<IoLogIn style={{marginLeft: "5px", color: "red"}}/></a></li>
-                    <li className={HomeCSS["hideOnMobile"]}><a href="./register">Register<IoIosCreate style={{marginLeft: "5px", color: "blue"}}/></a></li>
-                    <li className={HomeCSS["hideOnMobile"]}><a href="#">About<BsInfoCircleFill style={{marginLeft: "5px", color: "gold"}}/></a></li>
+                    <li><a className={HomeCSS["product"]} href="./home" style={{fontWeight:"bold", fontSize: "20px"}}><GiMaterialsScience style={{marginRight: "10px", fontSize: "30px", color: "#5783EB"}}/>Address Vault</a></li>
+                    <li className={HomeCSS["hideOnMobile"]}><a href="./login">Login<IoLogIn style={{marginLeft: "5px", color: "#5783EB", fontWeight: "bold"}}/></a></li>
+                    <li className={HomeCSS["hideOnMobile"]}><a href="./register">Register<IoIosCreate style={{marginLeft: "5px", color: "#5783EB", fontWeight: "bold"}}/></a></li>
+                    <li className={HomeCSS["hideOnMobile"]}><a href="#">About<BsInfoCircleFill style={{marginLeft: "5px", color: "#5783EB", fontWeight: "bold"}}/></a></li>
                     <li className={HomeCSS["menuButton"]} onClick={toggleSideBar}><a href="#"><RxHamburgerMenu /></a></li>
                 </ul>
             </nav>

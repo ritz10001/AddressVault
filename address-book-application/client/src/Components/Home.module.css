@@ -37,7 +37,7 @@
 }
 .create-button:hover{
     transition: 0.3s;
-    opacity: 0.8;
+    opacity: 0.6;
 }
 .create-button:not(:hover){
     transition: 0.3s;
@@ -83,7 +83,7 @@
 .body-container nav a:hover{
     transition: 0.3s;
     opacity: 1;
-    color: red;
+    color: #5783EB;
     background-color: black;
 }
 

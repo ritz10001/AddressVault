@@ -26,7 +26,7 @@ const UserInfo = ({onClose}) => {
                 <div className={UserInfoCSS["closeButton"]}>
                     <button onClick={onClose} style={{backgroundColor: "red", border: "none", borderRadius: "2px", color: "white", fontSize: "15px", fontWeight: "bold"}}><RxCross1 /></button>
                 </div>
-                <h2 style={{color: "red"}}>User Information</h2>
+                <h2 style={{color: "#5783EB", marginBottom: "10px"}}>User Information</h2>
                 <p>User: {userInfo.name}</p>
                 <p>Email: {userInfo.email}</p>
                 <p>Username: {userInfo.username}</p>

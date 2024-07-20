@@ -68,7 +68,7 @@
 }
 
 .register-link p a{
-    text-decoration: none;
+    text-decoration: underline;
     font-weight: bold;
 }
 .register-link a{
@@ -82,7 +82,7 @@
     opacity: 1;
 }
 .sign-in-button:hover{
-    opacity: 0.8;
+    opacity: 0.6;
     transition: 0.3s;
 }
 
