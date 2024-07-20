@@ -9,7 +9,7 @@ const vaultRoutes = require("./routes/vaultRoutes");
 const dotenv = require("dotenv").config();
 const errorHandler = require("./middleware/errorHandler");
 const envRouter = require("./routes/envRoute");
-const port = process.env.port || 3001;
+const port = process.env.PORT || 3001;
 
 app.use(express.json());
 app.use(cors());
