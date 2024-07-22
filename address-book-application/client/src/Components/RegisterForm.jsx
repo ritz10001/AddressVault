@@ -40,7 +40,7 @@ const RegisterForm = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post(`${BASE_URL}/user/register`, {name, email, username, password})
+        axios.post(`https://addressvault.onrender.com/user/register`, {name, email, username, password})
         .then(res => handleAccountClose())
         .catch(e => console.log(e));
 

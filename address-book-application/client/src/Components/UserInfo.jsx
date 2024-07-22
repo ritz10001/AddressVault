@@ -8,11 +8,9 @@ const UserInfo = ({onClose}) => {
     const [userInfo, setUserInfo] = useState(null);
     const token = localStorage.getItem("jsonwebtoken");
     useEffect(() => {
-        axios.get(`${BASE_URL}/user/current`, {headers: {"Authorization": `Bearer ${token}` }}).then(
+        axios.get(`https://addressvault.onrender.com/user/current`, {headers: {"Authorization": `Bearer ${token}` }}).then(
             response => {
-                console.log(response);
                 setUserInfo(response.data);
-                console.log("useinfo", userInfo);
             }
         ).catch(error => console.log(error));
     }, []);

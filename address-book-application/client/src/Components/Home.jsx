@@ -38,7 +38,7 @@ const Home = () => {
             </nav>
             <div className={HomeCSS["home-container"]}>
                 <div className={HomeCSS["text-container"]}>
-                    <h1 style={{color: "white"}}>Address Vault haha</h1>
+                    <h1 style={{color: "white"}}>Address Vault</h1>
                     <p>Your Ultimate Contact Management Solution. </p>
                     <p>Stay connected with the people that <span style={{fontStyle:"italic", color: "white", fontWeight: "bold"}}>truly &nbsp;</span>matter.</p>
                     <h2 style={{color: "white", marginTop: "10px"}}>Create you account <span style={{fontWeight:"bold", color:"white"}}>TODAY.</span></h2>

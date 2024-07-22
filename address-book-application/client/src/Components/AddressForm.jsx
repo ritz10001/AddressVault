@@ -28,7 +28,6 @@ const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit,
         axios.get(`${BASE_URL}/api/env`)
         .then(res => setApiKey(res.data["API_KEY"]))
         .catch(err => console.log(err));
-        console.log("KEY", apiKey)
         if(addressToEdit){
             setName(addressToEdit.name);
             setEmail(addressToEdit.email);
@@ -62,7 +61,7 @@ const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit,
         };
 
         if(addressToEdit){
-            axios.put(`${BASE_URL}/vault/${addressToEdit._id}`, newAddress, 
+            axios.put(`https://addressvault.onrender.com/vault/${addressToEdit._id}`, newAddress, 
                 {headers: { "Authorization": `Bearer ${token}` }}
             ).then(response => {
                 const updatedAddresses = addresses.map(address => address._id === addressToEdit._id ? response.data : address);
@@ -71,7 +70,7 @@ const AddressForm = ({ setAddresses, setIsFormVisible, addresses, addressToEdit,
             }).catch(error => console.log(error));
         }
         else{
-            axios.post(`${BASE_URL}/vault`, newAddress, 
+            axios.post(`https://addressvault.onrender.com/vault`, newAddress, 
                 { headers: { "Authorization": `Bearer ${token}` } }
             ).then(response => {
                 setAddresses([...addresses, response.data]);

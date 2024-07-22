@@ -7,7 +7,6 @@ const AddressModal = ({address, onClose}) => {
     if(!address){
         return null;
     }
-    console.log("addressmodal");
     return (
         <div className={AddressModalCSS["modalBackdrop"]}>
             <div className={AddressModalCSS["modalContent"]} onClick={(e) => e.stopPropagation()}>

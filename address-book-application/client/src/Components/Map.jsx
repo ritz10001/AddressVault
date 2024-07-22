@@ -18,8 +18,7 @@ const Map = ({address}) => {
     useEffect(() => {
       const fetchApiKey = async () => {
           try {
-              console.log("hello from fetch");
-              await axios.get(`${BASE_URL}/api/env`).then(res => setApiKey(res.data["API_KEY"]));
+              await axios.get(`https://addressvault.onrender.com/api/env`).then(res => setApiKey(res.data["API_KEY"]));
               setApiKeyLoaded(true);
           } catch (err) {
               console.log(err);

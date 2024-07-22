@@ -35,12 +35,12 @@ const Vault = () => {
 
         setTokenTimeout(token, handleLogout);
         
-        axios.get(`${BASE_URL}/vault`, 
+        axios.get(`https://addressvault.onrender.com/vault`, 
             {headers: {"Authorization": `Bearer ${token}`}}
         ).then(response => {setAddresses(response.data); setOriginalAddresses(structuredClone(response.data));})
             .catch(err => console.log(err));
 
-        axios.get(`${BASE_URL}/user/current`, 
+        axios.get(`https://addressvault.onrender.com/user/current`, 
             {headers: {"Authorization": `Bearer ${token}`}}
         ).then(response => {setUName(response.data["name"])}
         ).catch(error => navigate('/login'));
@@ -50,8 +50,6 @@ const Vault = () => {
         if (!token) return;
         const decodedToken = jwtDecode(token);
         const expirationTime = decodedToken.exp * 1000 - Date.now();
-
-        console.log(expirationTime/1000);
 
         if(expirationTime > 0){
             setTimeout(() => {
@@ -105,7 +103,7 @@ const Vault = () => {
 
     const deleteAddress = (address) => {
         const token = localStorage.getItem("jsonwebtoken");
-        axios.delete(`${BASE_URL}/vault/${address._id}`, {headers: {"Authorization": `Bearer ${token}`}}).then(
+        axios.delete(`https://addressvault.onrender.com/vault/${address._id}`, {headers: {"Authorization": `Bearer ${token}`}}).then(
             response => {
                 const updatedAddresses = addresses.filter(a => a._id !== address._id);
                 setAddresses(updatedAddresses);
