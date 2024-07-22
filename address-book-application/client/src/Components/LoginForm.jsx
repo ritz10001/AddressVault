@@ -23,7 +23,7 @@ const LoginForm = ({userName, setUserName}) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post(`${BASE_URL}/user/login`, {email, password})
+        axios.post(`https://addressvault.onrender.com/user/login`, {email, password})
         .then(res => {
             if(res.data["status"] === "success"){
                 setIsLoginFail(false);
