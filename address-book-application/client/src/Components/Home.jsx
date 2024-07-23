@@ -8,14 +8,25 @@ import { BsInfoCircleFill } from "react-icons/bs";
 import { FaCircleInfo } from "react-icons/fa6";
 import image from "../assets/connected-removebg-preview.png";
 import { GiMaterialsScience } from "react-icons/gi";
+import About from './About';
 
 const Home = () => {
 
     const [showSideBar, setShowSideBar] = useState(false);
+    const [isAboutVisible, setIsAboutVisible] = useState(false);
 
     function toggleSideBar(){
         setShowSideBar(!showSideBar);
     }
+
+    const toggleAboutVisibility = () => {
+        setIsAboutVisible(!isAboutVisible);
+    }
+
+    const handleAboutClose = () => {
+        setIsAboutVisible(false);
+    }
+
     
     return (
         <div className={HomeCSS['body-container']}>
@@ -25,14 +36,14 @@ const Home = () => {
                         <li onClick={toggleSideBar}><a href="#"><RxCross1 style={{marginLeft: "auto", backgroundColor: "blue"}}/></a></li>
                         <li><a href="./login">Login<IoLogIn style={{marginLeft: "5px", color: "#5783EB", fontWeight: "bold"}}/></a></li>
                         <li><a href="./register">Register<IoIosCreate style={{marginLeft: "5px", color: "#5783EB", fontWeight: "bold"}}/></a></li>
-                        <li><a href="#">About<FaCircleInfo style={{marginLeft: "5px", color: "#5783EB", fontWeight: "bold"}}/></a></li>
+                        <li><a onClick={toggleAboutVisibility}>About<FaCircleInfo style={{marginLeft: "5px", color: "#5783EB", fontWeight: "bold"}}/></a></li>
                     </ul>
                 }
                 <ul className={HomeCSS['horizontalbar']}>
                     <li><a className={HomeCSS["product"]} href="./home" style={{fontWeight:"bold", fontSize: "20px"}}><GiMaterialsScience style={{marginRight: "10px", fontSize: "30px", color: "#5783EB"}}/>Address Vault</a></li>
                     <li className={HomeCSS["hideOnMobile"]}><a href="./login">Login<IoLogIn style={{marginLeft: "5px", color: "#5783EB", fontWeight: "bold"}}/></a></li>
                     <li className={HomeCSS["hideOnMobile"]}><a href="./register">Register<IoIosCreate style={{marginLeft: "5px", color: "#5783EB", fontWeight: "bold"}}/></a></li>
-                    <li className={HomeCSS["hideOnMobile"]}><a href="#">About<BsInfoCircleFill style={{marginLeft: "5px", color: "#5783EB", fontWeight: "bold"}}/></a></li>
+                    <li className={HomeCSS["hideOnMobile"]}><a onClick={toggleAboutVisibility}>About<BsInfoCircleFill style={{marginLeft: "5px", color: "#5783EB", fontWeight: "bold"}}/></a></li>
                     <li className={HomeCSS["menuButton"]} onClick={toggleSideBar}><a href="#"><RxHamburgerMenu /></a></li>
                 </ul>
             </nav>
@@ -45,6 +56,7 @@ const Home = () => {
                     <button className={HomeCSS['create-button']}style={{backgroundColor: "#5783EB", color: "white", padding: "10px 25px", borderRadius: "5px", border: "none", fontSize: "1rem"}}><a href="./register" style={{textDecoration: "none", color: "white"}}><IoIosCreate style={{marginRight: "10px"}}/>Get Started</a></button>
                 </div>            
                 <img src={image} alt=""  style={{width: "50%"}}/>
+                {isAboutVisible && (<About onClose={handleAboutClose} />)}
             </div>
         </div>
     )

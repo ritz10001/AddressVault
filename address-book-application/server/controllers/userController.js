@@ -39,14 +39,12 @@ const registerUser = asyncHandler(async (req, res) => {
 //LOGIN CONTROLLER
 const loginUser = asyncHandler(async (req, res) => {
     const {email, password} = req.body;
-    console.log(req.body);
     if(!email || !password){
         res.status(400);
         throw new Error("Please fill up all the fields");
     }
 
     const user = await User.findOne({email});
-    console.log(user);
 
     if(user && (await bcrypt.compare(password, user.password))){
         const accessToken = jwt.sign({

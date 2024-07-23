@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import RegisterFormCSS from './RegisterForm.module.css';
 import { FaUser } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
@@ -16,6 +16,10 @@ const RegisterForm = () => {
     const [password, setPassword] = useState("");
     const [isAccountRegistered, setIsAccountRegistered] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        document.title = "Register User";
+    });
 
     function handleNameChange(event){
         setName(event.target.value);

@@ -4,7 +4,6 @@ import { FaUser } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import Test from "./Test";
 import { BASE_URL } from "../url";
 
 const LoginForm = ({userName, setUserName}) => {
@@ -15,6 +14,7 @@ const LoginForm = ({userName, setUserName}) => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        document.title = "Login Page";
         const token = localStorage.getItem("jsonwebtoken");
         if(token){
             navigate("/addressVault");

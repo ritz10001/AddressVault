@@ -31,6 +31,7 @@ const Vault = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        document.title = "Vault";
         const token = localStorage.getItem("jsonwebtoken");
 
         setTokenTimeout(token, handleLogout);
@@ -127,6 +128,7 @@ const Vault = () => {
     const handleUserClose = () => {
         setIsUserVisible(false);
     }
+    
     const doubleFunction = () => {
         toggleSideBar();
         toggleUserVisibility();

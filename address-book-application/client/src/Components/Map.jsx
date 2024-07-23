@@ -37,7 +37,7 @@ const Map = ({address}) => {
             const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json`, {
               params: {
                 address: fullAddress,
-                key: apiKey
+                key: "AIzaSyDdAVva_hPAJtlP2Xutm2kGi1z3etA7Jsk"
               }
             });
             const location = await response.data.results[0].geometry.location;
@@ -66,7 +66,7 @@ const Map = ({address}) => {
                     </GoogleMap>
                 </div>
                  : 
-                  <LoadScript googleMapsApiKey={apiKey}>
+                  <LoadScript googleMapsApiKey={"AIzaSyDdAVva_hPAJtlP2Xutm2kGi1z3etA7Jsk"}>
                       {coordinates ? (
                           <div className={MapCSS['map-container']}>
                           <GoogleMap mapContainerClassName={MapCSS['map-container']}

@@ -24,10 +24,8 @@ const getAddressById = asyncHandler(async (req, res) => {
 
 const createAddress = asyncHandler(async (req, res) => {
     const {name, email, phone, addressLine1, addressLine2 = '', city, state, postalCode, country} = req.body;
-    console.log(req.body);
 
     if(!name || !email || !phone || !addressLine1 || !city || !state || !postalCode || !country){
-        console.log("no");
         res.status(400);
         throw new Error("All fields must be filled!");
     }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ExpiredTokenCSS from './ExpiredTokenAlert.module.css';
 import { IoWarning } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +9,11 @@ const ExpiredTokenAlert = ({onClose}) => {
         onClose();
         navigate('/login');
     }
+
+    useEffect(() => {
+        document.title = "Token Expired!";
+    });
+    
     return(
         <div className={ExpiredTokenCSS["expBackdrop"]}>
             <div className={ExpiredTokenCSS["expContent"]}>
