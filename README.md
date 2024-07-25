@@ -1,6 +1,7 @@
 
 # AddressVault
 
+Project is hosted on: https://adorable-entremet-9fe5e1.netlify.app/
 A comprehensive address management application featuring Google Maps integration to provide location based functionality. 
 
 # Features
